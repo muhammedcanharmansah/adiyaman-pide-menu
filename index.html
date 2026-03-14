@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adıyaman Pide & Kebap | Dijital Menü</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-color: #c0392b; /* Odun ateşi kırmızısı */
+            --gold-color: #d4af37;
+            --bg-color: #fffaf0; /* Kağıt/Hamur tonu */
+            --text-dark: #2c3e50;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-bottom: 5px solid var(--accent-color);
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            margin: 0;
+            color: white;
+        }
+
+        .sub-logo {
+            font-size: 0.9rem;
+            color: var(--gold-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        .category-box {
+            margin-top: 40px;
+        }
+
+        .category-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-color);
+            border-bottom: 2px double var(--accent-color);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            font-size: 1.6rem;
+        }
+
+        .menu-item {
+            background: white;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 4px solid transparent;
+            transition: 0.3s;
+        }
+
+        .menu-item:hover {
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: block;
+        }
+
+        .item-desc {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 3px;
+            display: block;
+        }
+
+        .price {
+            font-weight: 700;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-left: 15px;
+        }
+
+        .badge {
+            background: var(--gold-color);
+            color: black;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: #f1f1f1;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="sub-logo">Geleneksel Taş Fırın</span>
+        <h1 class="logo-text">ADIYAMAN PİDE</h1>
+    </header>
+
+    <div class="container">
+        
+        <div class="category-box">
+            <h2 class="category-title">Pide Çeşitleri</h2>
+            
+            <div class="menu-item">
+                <div class="item-details">
+                    <span class="item-name">Kıymalı Pide <span class="badge">MEŞHUR</span></span>
+                    <span class="item-desc">Özel zırh kıyması ve taze sebzeler ile.</span>
+                </div>
+                <div class="price">180₺</div>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-details">
+                    <span class="item-name">Kuşbaşılı Pide</span>
+                    <span class="item-desc">Özel terbiye edilmiş dana eti.</span>
+                </div>
+                <div class="price">210₺</div>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-details">
+                    <span class="item-name">Kaşarlı Pide</span>
+                    <span class="item-desc">Bol erimiş kaşar peyniri.</span>
+                </div>
+                <div class="price">160₺</div>
+            </div>
+        </div>
+
+        <div class="category-box">
+            <h2 class="category-title">Lahmacun</h2>
+            
+            <div class="menu-item">
+                <div class="item-details">
+                    <span class="item-name">Adıyaman Usulü Lahmacun</span>
+                    <span class="item-desc">Sarımsaklı, çıtır çıtır.</span>
+                </div>
+                <div class="price">75₺</div>
+            </div>
+        </div>
+
+        <div class="category-box">
+            <h2 class="category-title">İçecekler</h2>
+            
+            <div class="menu-item">
+                <div class="item-details">
+                    <span class="item-name">Ev Yapımı Ayran</span>
+                </div>
+                <div class="price">40₺</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <span class="item-name">Kutu İçecekler</span>
+                </div>
+                <div class="price">45₺</div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>📍 Çarşı Caddesi No:1, Adıyaman</p>
+        <a href="tel:+904160000000" class="contact-btn">📞 Hemen Ara: 0416 XXX XX XX</a>
+        <p style="margin-top: 20px; font-size: 0.7rem;">&copy; 2026 Adıyaman Pide Menü Sistemi</p>
+    </footer>
+
+</body>
+</html>
