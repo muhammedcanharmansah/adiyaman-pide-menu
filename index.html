@@ -861,7 +861,7 @@ function render(d) {
   // canvas
   new AnnounceCanvas(
     document.getElementById('announceCanvas'),
-    d.announcements
+    d.announcements?.mesajlar || d.announcements
   );
 
   // hide loader
