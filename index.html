@@ -2,824 +2,1045 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adıyaman Pide — Dijital Menü</title>
+<!-- Mobil için kritik: viewport ayarı — genişliği cihaza göre ayarlar, kullanıcı zoom'unu engeller -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- iOS: Ana ekrana eklendiğinde tam ekran uygulama gibi açılır -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Android Chrome: Adres çubuğu rengi -->
+<meta name="theme-color" content="#c0392b">
+<title>Adıyaman Pide — Menü</title>
+
+<!-- Google Fonts — yalnızca gerekli ağırlıklar yükleniyor (performans) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
 <style>
-  :root {
-    --crimson:   #c0392b;
-    --crimson-dk:#96281b;
-    --gold:      #d4af37;
-    --gold-lt:   #e8cb6a;
-    --cream:     #fdf5e6;
-    --cream-dk:  #f0e0c0;
-    --charcoal:  #1a1008;
-    --smoke:     #5c4033;
-  }
+/* ════════════════════════════════════════════════
+   CSS DEĞİŞKENLERİ — Renk Paleti
+════════════════════════════════════════════════ */
+:root {
+  --kirmizi:    #c0392b;   /* Odun kırmızısı — ana renk */
+  --kirmizi-dk: #96281b;   /* Koyu kırmızı — hover, gölge */
+  --altin:      #d4af37;   /* Altın sarısı — vurgu */
+  --altin-lt:   #e8cb6a;   /* Açık altın */
+  --krem:       #fdf5e6;   /* Krem — arka plan */
+  --krem-dk:    #f0e0c0;   /* Koyu krem — kart arka planı */
+  --koyu:       #1a1008;   /* Neredeyse siyah — metin */
+  --duman:      #5c4033;   /* Kahverengi gri — yardımcı metin */
+  --beyaz:      #ffffff;
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* Mobil dokunma hedef boyutu — minimum 44px (Apple HIG standardı) */
+  --dokunma-min: 48px;
+}
 
-  html { scroll-behavior: smooth; }
+/* ════════════════════════════════════════════════
+   SIFIR & TEMEL
+════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+  /* iOS'ta görüntüleri seçilmez yapar */
+  -webkit-tap-highlight-color: transparent;
+}
 
-  body {
-    background: var(--cream);
-    color: var(--charcoal);
-    font-family: 'Lora', serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+html {
+  /* Mobilde parmakla kaydırmayı düzgünleştirir */
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  font-size: 16px; /* Temel font boyutu — rem hesapları buraya göre */
+}
 
-  /* ── GRAIN OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.5;
-  }
+body {
+  background: var(--krem);
+  color: var(--koyu);
+  font-family: 'Lora', serif;
+  /* Mobilde yatay taşmayı önler */
+  overflow-x: hidden;
+  /* Alt navigasyon için yer bırakır */
+  padding-bottom: 72px;
+  min-height: 100dvh; /* dvh: mobil browser toolbar'ı hesaba katar */
+}
 
-  /* ── HEADER ── */
-  header {
-    background: linear-gradient(160deg, var(--crimson-dk) 0%, var(--crimson) 60%, #8b1a10 100%);
-    text-align: center;
-    padding: 48px 24px 36px;
-    position: relative;
-    overflow: hidden;
-  }
+/* ════════════════════════════════════════════════
+   YÜKLENİYOR EKRANI
+════════════════════════════════════════════════ */
+#yukleniyor {
+  position: fixed; inset: 0;
+  background: var(--kirmizi-dk);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity .5s ease, visibility .5s;
+}
+#yukleniyor.gizli { opacity: 0; visibility: hidden; pointer-events: none; }
 
-  header::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 18px,
-      rgba(255,255,255,0.025) 18px,
-      rgba(255,255,255,0.025) 19px
-    );
-  }
+.yukl-ikon { font-size: 3.5rem; animation: zıpla .7s ease-in-out infinite alternate; }
 
-  .flame-ring {
-    width: 110px; height: 110px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 40% 35%, var(--gold-lt), var(--gold) 50%, #b8860b);
-    margin: 0 auto 18px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 52px;
-    box-shadow: 0 0 0 6px rgba(212,175,55,0.3), 0 0 30px rgba(212,175,55,0.5), 0 0 60px rgba(192,57,43,0.4);
-    animation: pulse-ring 3s ease-in-out infinite;
-    position: relative; z-index: 1;
-  }
+@keyframes zıpla {
+  from { transform: translateY(0) scale(1); }
+  to   { transform: translateY(-12px) scale(1.08); }
+}
 
-  @keyframes pulse-ring {
-    0%, 100% { box-shadow: 0 0 0 6px rgba(212,175,55,0.3), 0 0 30px rgba(212,175,55,0.5), 0 0 60px rgba(192,57,43,0.4); }
-    50%       { box-shadow: 0 0 0 14px rgba(212,175,55,0.2), 0 0 50px rgba(212,175,55,0.7), 0 0 90px rgba(192,57,43,0.6); }
-  }
+.yukl-yazi {
+  color: var(--krem);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1rem;
+  margin-top: 16px;
+  opacity: .85;
+}
 
-  header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.2rem, 7vw, 3.6rem);
-    color: var(--cream);
-    line-height: 1.1;
-    letter-spacing: .02em;
-    position: relative; z-index: 1;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
-  }
+/* ════════════════════════════════════════════════
+   HEADER — Restoran Başlığı
+════════════════════════════════════════════════ */
+header {
+  background: linear-gradient(160deg, var(--kirmizi-dk) 0%, var(--kirmizi) 65%, #8b1a10 100%);
+  padding: 36px 20px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
 
-  header h1 span {
-    display: block;
-    font-size: 0.42em;
-    font-style: italic;
-    color: var(--gold-lt);
-    letter-spacing: .12em;
-    margin-top: 6px;
-    font-weight: 400;
-  }
+/* Çapraz çizgi dokusu — hafif şeffaf */
+header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    rgba(255,255,255,0.03) 20px,
+    rgba(255,255,255,0.03) 21px
+  );
+  pointer-events: none;
+}
 
-  .header-divider {
-    margin: 20px auto 0;
-    width: 160px; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    position: relative; z-index: 1;
-  }
+/* Yuvarlak ikon — logonun yerini tutar */
+.logo-cember {
+  width: 90px; height: 90px;
+  background: radial-gradient(circle at 40% 35%, var(--altin-lt), var(--altin) 55%, #b8860b);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 42px;
+  margin: 0 auto 14px;
+  box-shadow:
+    0 0 0 5px rgba(212,175,55,.25),
+    0 0 24px rgba(212,175,55,.4),
+    0 0 48px rgba(192,57,43,.35);
+  animation: nabız 3s ease-in-out infinite;
+  position: relative; z-index: 1;
+}
 
-  /* ── CANVAS ANNOUNCEMENT BOARD ── */
-  .announce-wrapper {
-    background: var(--charcoal);
-    padding: 0;
-    position: relative;
-    overflow: hidden;
-  }
+@keyframes nabız {
+  0%,100% { box-shadow: 0 0 0 5px rgba(212,175,55,.25), 0 0 24px rgba(212,175,55,.4); }
+  50%      { box-shadow: 0 0 0 12px rgba(212,175,55,.15), 0 0 44px rgba(212,175,55,.6); }
+}
 
-  .announce-wrapper::before {
-    content: '📢 DUYURU';
-    position: absolute;
-    left: 18px; top: 50%;
-    transform: translateY(-50%);
-    color: var(--gold);
-    font-family: 'Amiri', serif;
-    font-size: 0.7rem;
-    letter-spacing: .15em;
-    font-weight: 700;
-    z-index: 2;
-    white-space: nowrap;
-  }
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 8vw, 2.8rem); /* Ekran genişliğine göre otomatik boyutlanır */
+  color: var(--krem);
+  line-height: 1.1;
+  position: relative; z-index: 1;
+  text-shadow: 0 2px 10px rgba(0,0,0,.4);
+}
 
-  #announcementCanvas {
-    display: block;
-    width: 100%;
-    height: 68px;
-  }
+header h1 em {
+  display: block;
+  font-size: .42em;
+  font-weight: 400;
+  color: var(--altin-lt);
+  letter-spacing: .1em;
+  margin-top: 5px;
+}
 
-  /* ── OWNER NOTE ── */
-  .owner-note {
-    background: linear-gradient(135deg, var(--gold) 0%, #c9a227 100%);
-    padding: 18px 28px;
-    display: flex; align-items: center; gap: 14px;
-    border-top: 3px solid var(--crimson);
-  }
+/* İnce altın çizgi — ayraç */
+.header-cizgi {
+  width: 120px; height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--altin), transparent);
+  margin: 14px auto 0;
+  position: relative; z-index: 1;
+}
 
-  .owner-note-icon { font-size: 1.8rem; flex-shrink: 0; }
+/* ════════════════════════════════════════════════
+   CANVAS DUYURU PANOSU
+   — Kayan mesajlar, altın glow, parçacıklar
+════════════════════════════════════════════════ */
+.duyuru-sart {
+  background: #0d0904;
+  position: relative;
+  overflow: hidden;
+}
 
-  .owner-note-text {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 0.95rem;
-    color: var(--charcoal);
-    line-height: 1.5;
-  }
+/* "📢" etiketi — solda sabit */
+.duyuru-sart::before {
+  content: '📢';
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  z-index: 2;
+  filter: drop-shadow(0 0 6px rgba(212,175,55,.6));
+}
 
-  /* ── NAV TABS ── */
-  .category-nav {
-    background: var(--cream-dk);
-    border-bottom: 2px solid var(--gold);
-    display: flex;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: 0;
-    position: sticky; top: 0; z-index: 100;
-  }
+#duyuruCanvas {
+  display: block;
+  width: 100%;
+  /* Mobilde 56px yeterli — çok yer kaplamaz */
+  height: 56px;
+}
 
-  .category-nav::-webkit-scrollbar { display: none; }
+/* ════════════════════════════════════════════════
+   USTA NOTU — Altın şerit
+════════════════════════════════════════════════ */
+.usta-notu {
+  background: linear-gradient(135deg, var(--altin) 0%, #c9a227 100%);
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-top: 3px solid var(--kirmizi);
+}
 
-  .cat-tab {
-    flex-shrink: 0;
-    padding: 16px 22px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: 'Lora', serif;
-    font-size: 0.88rem;
-    color: var(--smoke);
-    display: flex; align-items: center; gap: 7px;
-    border-bottom: 3px solid transparent;
-    transition: all .25s ease;
-    white-space: nowrap;
-    position: relative;
-    bottom: -2px;
-  }
+.usta-ikon { font-size: 1.6rem; flex-shrink: 0; margin-top: 1px; }
 
-  .cat-tab:hover { color: var(--crimson); background: rgba(192,57,43,0.05); }
+.usta-metin {
+  font-style: italic;
+  font-size: .88rem;
+  color: var(--koyu);
+  line-height: 1.5;
+}
 
-  .cat-tab.active {
-    color: var(--crimson);
-    border-bottom-color: var(--crimson);
-    font-weight: 600;
-  }
+/* ════════════════════════════════════════════════
+   KATEGORİ SEKMELERİ — Yatay kaydırmalı
+   Mobilde parmakla sola sağa kaydırılır
+════════════════════════════════════════════════ */
+.kategori-nav {
+  background: var(--krem-dk);
+  border-bottom: 2px solid rgba(212,175,55,.5);
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch; /* iOS smooth scroll */
+  scrollbar-width: none; /* Firefox'ta scrollbar'ı gizler */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  /* Hafif gölge — sticky olduğu belli olsun */
+  box-shadow: 0 2px 8px rgba(26,16,8,.1);
+}
 
-  .cat-tab .tab-icon { font-size: 1.1rem; }
+/* Chrome/Safari'de scrollbar'ı gizler */
+.kategori-nav::-webkit-scrollbar { display: none; }
 
-  /* ── MAIN CONTENT ── */
-  main { max-width: 900px; margin: 0 auto; padding: 32px 16px 64px; }
+/* Her sekme butonu — parmak dokunuşuna uygun */
+.sekme {
+  flex-shrink: 0;
+  min-height: var(--dokunma-min); /* Minimum 48px dokunma hedefi */
+  padding: 0 18px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-family: 'Lora', serif;
+  font-size: .85rem;
+  color: var(--duman);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .2s, border-color .2s, background .2s;
+  white-space: nowrap;
+  position: relative;
+  bottom: -2px; /* border-bottom ile alt sınır hizalaması */
+  /* Mobilde içeriği çok küçük tutmamak için */
+  letter-spacing: .01em;
+}
 
-  /* ── CATEGORY SECTION ── */
-  .category-section { margin-bottom: 52px; }
+.sekme:active { background: rgba(192,57,43,.08); }
 
-  .category-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    color: var(--crimson);
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 24px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--cream-dk);
-    position: relative;
-  }
+.sekme.aktif {
+  color: var(--kirmizi);
+  border-bottom-color: var(--kirmizi);
+  font-weight: 600;
+}
 
-  .category-title::after {
-    content: '';
-    position: absolute;
-    bottom: -1px; left: 0;
-    width: 80px; height: 2px;
-    background: var(--gold);
-  }
+.sekme-ikon { font-size: 1rem; }
 
-  /* ── MENU GRID ── */
-  .menu-grid {
+/* ════════════════════════════════════════════════
+   ANA İÇERİK
+════════════════════════════════════════════════ */
+main {
+  padding: 20px 12px 24px;
+  max-width: 600px; /* Tabletlerde ortalar */
+  margin: 0 auto;
+}
+
+/* ════════════════════════════════════════════════
+   KATEGORİ BÖLÜMÜ
+════════════════════════════════════════════════ */
+.kategori-bolum { margin-bottom: 40px; }
+
+.kategori-baslik {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--kirmizi);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--krem-dk);
+  position: relative;
+}
+
+/* Altın vurgu çizgisi */
+.kategori-baslik::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 60px; height: 2px;
+  background: var(--altin);
+}
+
+/* ════════════════════════════════════════════════
+   MENÜ KARTI — MOBİL-ÖNCELİKLİ YATAY DÜZEN
+   Sol: Görsel (kare) | Sağ: Bilgiler
+   Bu düzen telefonda çok daha iyi çalışır:
+   — Daha fazla ürün görünür (scroll az)
+   — Parmakla okumak kolaydır
+════════════════════════════════════════════════ */
+.menu-karti {
+  background: var(--beyaz);
+  border-radius: 14px;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 10px rgba(26,16,8,.07);
+  transition: transform .2s ease, box-shadow .2s ease;
+  /* Giriş animasyonu */
+  opacity: 0;
+  transform: translateY(16px);
+  animation: kart-gir .45s ease forwards;
+  position: relative;
+  /* Minimum dokunma yüksekliği */
+  min-height: 110px;
+}
+
+/* Kart sırasına göre gecikme — stagger efekti */
+.menu-karti:nth-child(1) { animation-delay: .04s; }
+.menu-karti:nth-child(2) { animation-delay: .08s; }
+.menu-karti:nth-child(3) { animation-delay: .12s; }
+.menu-karti:nth-child(4) { animation-delay: .16s; }
+.menu-karti:nth-child(5) { animation-delay: .20s; }
+.menu-karti:nth-child(6) { animation-delay: .24s; }
+.menu-karti:nth-child(7) { animation-delay: .28s; }
+.menu-karti:nth-child(8) { animation-delay: .32s; }
+
+@keyframes kart-gir {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobilde dokunmada hafif küçülme — tıklandığı hissi */
+.menu-karti:active { transform: scale(.985); }
+
+/* ── GÖRSEL ALANI — Sol taraf ── */
+.kart-gorsel {
+  width: 110px;     /* Sabit genişlik — solda görsel bloğu */
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--krem-dk) 0%, #e8d5b0 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Görsel yüklenirken shimmer animasyonu */
+.gorsel-placeholder {
+  position: absolute; inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: rgba(92,64,51,.3);
+  font-size: 1.8rem;
+  overflow: hidden;
+}
+
+.gorsel-placeholder small {
+  font-size: .6rem;
+  font-style: italic;
+  letter-spacing: .05em;
+}
+
+/* Parlama efekti — yükleme göstergesi */
+.gorsel-placeholder::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,.45) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: parlama 1.6s ease-in-out infinite;
+}
+
+@keyframes parlama {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.kart-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity .4s ease;
+  position: absolute; inset: 0;
+  z-index: 1;
+}
+
+.kart-img.yuklendi { opacity: 1; }
+
+/* ── ROZET — Sol üst köşe ── */
+.rozet {
+  position: absolute;
+  top: 8px; left: 8px;
+  background: var(--kirmizi);
+  color: #fff;
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  padding: 3px 8px;
+  border-radius: 20px;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(192,57,43,.4);
+  white-space: nowrap;
+  /* Çok uzun rozet metninde taşmayı önle */
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rozet.altin {
+  background: var(--altin);
+  color: var(--koyu);
+  box-shadow: 0 2px 6px rgba(212,175,55,.4);
+}
+
+/* ── KART BİLGİ ALANI — Sağ taraf ── */
+.kart-bilgi {
+  flex: 1; /* Kalan alanı doldurur */
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0; /* Flex içinde taşmayı önler */
+}
+
+.kart-ad {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--koyu);
+  line-height: 1.2;
+  margin-bottom: 5px;
+  /* Çok uzun isimler için... */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.kart-aciklama {
+  font-size: .76rem;
+  color: var(--duman);
+  font-style: italic;
+  line-height: 1.45;
+  flex: 1;
+  /* Açıklama 2 satırda kesilir — kart yüksekliği sabit kalır */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-bottom: 8px;
+}
+
+/* Fiyat + etiket alt satırı */
+.kart-alt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.kart-fiyat {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--kirmizi);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.kart-fiyat::before {
+  content: '₺';
+  font-size: .75em;
+  margin-right: 1px;
+  vertical-align: middle;
+}
+
+/* Küçük "Taş Fırın" etiketi */
+.kart-etiket {
+  font-size: .62rem;
+  color: var(--altin);
+  border: 1px solid rgba(212,175,55,.6);
+  padding: 2px 7px;
+  border-radius: 20px;
+  white-space: nowrap;
+  letter-spacing: .04em;
+}
+
+/* ════════════════════════════════════════════════
+   ALT NAVİGASYON — Mobil uygulama tarzı
+   Sabit alta yapışık, büyük dokunma alanı
+════════════════════════════════════════════════ */
+.alt-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(253,245,230,.97);
+  border-top: 1px solid rgba(212,175,55,.4);
+  display: flex;
+  z-index: 200;
+  /* iOS safe area — çentik (notch) ve home çubuğu için boşluk */
+  padding-bottom: env(safe-area-inset-bottom);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 -4px 20px rgba(26,16,8,.1);
+}
+
+.alt-sekme {
+  flex: 1;
+  min-height: var(--dokunma-min);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 4px;
+  color: var(--duman);
+  transition: color .2s, background .2s;
+  position: relative;
+}
+
+.alt-sekme:active { background: rgba(192,57,43,.06); }
+
+.alt-sekme.aktif { color: var(--kirmizi); }
+
+/* Aktif sekmenin üst çizgisi */
+.alt-sekme.aktif::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20%; right: 20%;
+  height: 2.5px;
+  background: var(--kirmizi);
+  border-radius: 0 0 3px 3px;
+}
+
+.alt-sekme-ikon { font-size: 1.3rem; }
+
+.alt-sekme-yazi {
+  font-family: 'Lora', serif;
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+  /* Uzun isimleri kır */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  padding: 0 2px;
+}
+
+/* ════════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════════ */
+footer {
+  background: var(--koyu);
+  color: rgba(253,245,230,.6);
+  text-align: center;
+  padding: 28px 20px;
+  font-size: .78rem;
+  line-height: 1.8;
+}
+
+footer strong {
+  color: var(--altin);
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+}
+
+/* Telefon numarası tıklanabilir */
+footer a {
+  color: var(--altin-lt);
+  text-decoration: none;
+}
+
+/* ════════════════════════════════════════════════
+   TABLET VE ÜSTÜ — İki sütun kart düzeni
+════════════════════════════════════════════════ */
+@media (min-width: 600px) {
+  .menu-listesi {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 22px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 
-  /* ── MENU CARD ── */
-  .menu-card {
-    background: #fff;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(26,16,8,0.08);
-    transition: transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s ease;
-    opacity: 0;
-    transform: translateY(24px);
-    animation: card-in .5s ease forwards;
-    position: relative;
-  }
+  .menu-karti { margin-bottom: 0; }
 
-  .menu-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 36px rgba(26,16,8,0.16);
-  }
+  .kart-gorsel { width: 120px; }
+}
 
-  @keyframes card-in {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Stagger delays */
-  .menu-card:nth-child(1)  { animation-delay: .05s; }
-  .menu-card:nth-child(2)  { animation-delay: .10s; }
-  .menu-card:nth-child(3)  { animation-delay: .15s; }
-  .menu-card:nth-child(4)  { animation-delay: .20s; }
-  .menu-card:nth-child(5)  { animation-delay: .25s; }
-  .menu-card:nth-child(6)  { animation-delay: .30s; }
-  .menu-card:nth-child(7)  { animation-delay: .35s; }
-  .menu-card:nth-child(8)  { animation-delay: .40s; }
-
-  /* ── BADGE ── */
-  .badge {
-    position: absolute;
-    top: 10px; left: 10px;
-    background: var(--crimson);
-    color: #fff;
-    font-size: 0.65rem;
-    font-family: 'Lora', serif;
-    letter-spacing: .06em;
-    padding: 4px 10px;
-    border-radius: 20px;
-    z-index: 2;
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(192,57,43,0.4);
-  }
-
-  .badge.gold { background: var(--gold); color: var(--charcoal); }
-
-  /* ── IMAGE AREA ── */
-  .card-img-wrapper {
-    width: 100%;
-    aspect-ratio: 4/3;
-    overflow: hidden;
-    background: linear-gradient(135deg, var(--cream-dk) 0%, #e8d5b0 100%);
-    position: relative;
-  }
-
-  .card-img-placeholder {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 8px;
-    color: rgba(92,64,51,0.35);
-    font-size: 2.4rem;
-  }
-
-  .card-img-placeholder span {
-    font-size: 0.7rem;
-    font-family: 'Lora', serif;
-    letter-spacing: .08em;
-    font-style: italic;
-  }
-
-  /* Skeleton shimmer */
-  .card-img-placeholder::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(90deg,
-      transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
-    background-size: 200% 100%;
-    animation: shimmer 1.8s infinite;
-  }
-
-  @keyframes shimmer {
-    0%   { background-position: -200% 0; }
-    100% { background-position:  200% 0; }
-  }
-
-  .card-img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform .5s ease, opacity .4s ease;
-    opacity: 0;
-    position: relative; z-index: 1;
-  }
-
-  .card-img.loaded { opacity: 1; }
-  .menu-card:hover .card-img.loaded { transform: scale(1.06); }
-
-  /* ── CARD BODY ── */
-  .card-body { padding: 16px 18px 18px; }
-
-  .card-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    color: var(--charcoal);
-    margin-bottom: 6px;
-    line-height: 1.2;
-  }
-
-  .card-desc {
-    font-size: 0.8rem;
-    color: var(--smoke);
-    line-height: 1.55;
-    margin-bottom: 14px;
-    font-style: italic;
-  }
-
-  .card-footer {
-    display: flex; align-items: center; justify-content: space-between;
-  }
-
-  .card-price {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: var(--crimson);
-    font-weight: 700;
-  }
-
-  .card-price::before { content: '₺'; font-size: 0.75em; margin-right: 2px; }
-
-  .card-tag {
-    font-size: 0.68rem;
-    letter-spacing: .06em;
-    color: var(--gold);
-    font-family: 'Lora', serif;
-    border: 1px solid var(--gold);
-    padding: 3px 9px;
-    border-radius: 20px;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--charcoal);
-    color: rgba(253,245,230,0.6);
-    text-align: center;
-    padding: 32px 24px;
-    font-size: 0.8rem;
-    line-height: 1.8;
-  }
-
-  footer strong { color: var(--gold); font-family: 'Playfair Display', serif; }
-
-  /* ── LOADING OVERLAY ── */
-  #loading {
-    position: fixed; inset: 0;
-    background: var(--crimson-dk);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    z-index: 9000;
-    transition: opacity .6s ease, visibility .6s;
-  }
-
-  #loading.hidden { opacity: 0; visibility: hidden; }
-
-  .loading-flame { font-size: 4rem; animation: bounce-flame .8s ease-in-out infinite alternate; }
-
-  @keyframes bounce-flame {
-    from { transform: translateY(0) scale(1); }
-    to   { transform: translateY(-10px) scale(1.1); }
-  }
-
-  .loading-text {
-    color: var(--cream);
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.1rem;
-    margin-top: 18px;
-    opacity: .85;
-  }
-
-  /* ── SCROLL TO TOP ── */
-  #scrollTop {
-    position: fixed;
-    bottom: 24px; right: 20px;
-    width: 46px; height: 46px;
-    background: var(--crimson);
-    color: #fff;
-    border: none; border-radius: 50%;
-    font-size: 1.3rem; cursor: pointer;
-    box-shadow: 0 4px 16px rgba(192,57,43,0.5);
-    transition: all .3s ease;
-    opacity: 0; transform: translateY(20px);
-    z-index: 500;
-  }
-
-  #scrollTop.visible { opacity: 1; transform: translateY(0); }
-  #scrollTop:hover { background: var(--crimson-dk); transform: translateY(-3px); }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 500px) {
-    .menu-grid { grid-template-columns: 1fr; }
-    header { padding: 36px 16px 28px; }
-  }
+/* Büyük ekranlarda alt nav gizlenir, üst sekmeler yeterli */
+@media (min-width: 900px) {
+  .alt-nav { display: none; }
+  body { padding-bottom: 0; }
+}
 </style>
 </head>
 <body>
 
-<!-- Loading Overlay -->
-<div id="loading">
-  <div class="loading-flame">🔥</div>
-  <div class="loading-text">Menü hazırlanıyor...</div>
+<!-- ── YÜKLENİYOR EKRANI ── -->
+<div id="yukleniyor">
+  <div class="yukl-ikon">🔥</div>
+  <div class="yukl-yazi">Menü yükleniyor…</div>
 </div>
 
-<!-- Header -->
+<!-- ── HEADER ── -->
 <header>
-  <div class="flame-ring">🫓</div>
-  <h1 id="restaurantName">Adıyaman Pide
-    <span id="restaurantTagline">Geleneksel Lezzet, Asırlık Tarif</span>
+  <div class="logo-cember">🫓</div>
+  <h1 id="restoranAd">Adıyaman Pide
+    <em id="restoranSlogan">Geleneksel Lezzet, Asırlık Tarif</em>
   </h1>
-  <div class="header-divider"></div>
+  <div class="header-cizgi"></div>
 </header>
 
-<!-- Canvas Announcement Board -->
-<div class="announce-wrapper">
-  <canvas id="announcementCanvas"></canvas>
+<!-- ── CANVAS DUYURU PANOSU ── -->
+<div class="duyuru-sart">
+  <canvas id="duyuruCanvas"></canvas>
 </div>
 
-<!-- Owner Note -->
-<div class="owner-note" id="ownerNote" style="display:none">
-  <div class="owner-note-icon">👨‍🍳</div>
-  <div class="owner-note-text" id="ownerNoteText"></div>
+<!-- ── USTA NOTU ── -->
+<div class="usta-notu" id="ustaNotu" style="display:none">
+  <span class="usta-ikon">👨‍🍳</span>
+  <p class="usta-metin" id="ustaMetnİ"></p>
 </div>
 
-<!-- Category Nav -->
-<nav class="category-nav" id="categoryNav" role="tablist"></nav>
+<!-- ── ÜST KATEGORİ SEKMELERİ (tablet+) ── -->
+<nav class="kategori-nav" id="kategoriNav" role="tablist" aria-label="Menü kategorileri"></nav>
 
-<!-- Main Menu -->
-<main id="menuMain"></main>
+<!-- ── ANA MENÜ ── -->
+<main id="menuAna" role="main"></main>
 
-<!-- Footer -->
+<!-- ── FOOTER ── -->
 <footer id="siteFooter"></footer>
 
-<!-- Scroll to top -->
-<button id="scrollTop" aria-label="Yukarı çık" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<!-- ── ALT NAVİGASYON (mobil) ── -->
+<nav class="alt-nav" id="altNav" role="navigation" aria-label="Alt navigasyon"></nav>
+
 
 <script>
-/* ═══════════════════════════════════════════════════════
-   CANVAS ANNOUNCEMENT BOARD
-═══════════════════════════════════════════════════════ */
-class AnnouncementBoard {
-  constructor(canvasEl, messages) {
-    this.canvas = canvasEl;
-    this.ctx    = canvasEl.getContext('2d');
-    this.messages = messages;
-    this.current  = 0;
-    this.alpha    = 0;
-    this.state    = 'fade-in';  // fade-in | hold | fade-out
-    this.tick     = 0;
-    this.HOLD     = 220;  // frames to hold
-    this.FADE     = 40;   // frames to fade
+/* ════════════════════════════════════════════════════════
+   DUYURU CANVAS SINIFI
+   — Kayan mesajlar, parçacıklar, altın glow efekti
+════════════════════════════════════════════════════════ */
+class DuyuruPanosu {
+  constructor(canvas, mesajlar) {
+    this.canvas   = canvas;
+    this.ctx      = canvas.getContext('2d');
+    this.mesajlar = mesajlar.filter(m => !m.startsWith('--')); /* Açıklama satırlarını filtrele */
+    this.simdiki  = 0;
+    this.alfa     = 0;
+    this.durum    = 'gir';   /* gir | bekle | cik */
+    this.tik      = 0;
+    this.BEKLE    = 200;     /* Mesajın ekranda kalacağı kare sayısı */
+    this.GECİS   = 35;      /* Fade kare sayısı */
 
-    this.particles = [];
-    for (let i = 0; i < 18; i++) this.particles.push(this._mkParticle());
+    /* Arka plan parçacıkları */
+    this.parcaciklar = Array.from({length: 14}, () => this._yeniParcacik());
 
-    this.resize();
-    window.addEventListener('resize', () => this.resize());
-    requestAnimationFrame(() => this._loop());
+    this.boyutla();
+    window.addEventListener('resize', () => this.boyutla());
+    requestAnimationFrame(() => this._dongu());
   }
 
-  resize() {
-    this.canvas.width  = this.canvas.offsetWidth * devicePixelRatio;
-    this.canvas.height = this.canvas.offsetHeight * devicePixelRatio;
-    this.ctx.scale(devicePixelRatio, devicePixelRatio);
-    this.W = this.canvas.offsetWidth;
-    this.H = this.canvas.offsetHeight;
+  boyutla() {
+    const dpr = Math.min(devicePixelRatio, 2); /* Hafıza tasarrufu için max 2x */
+    this.canvas.width  = this.canvas.offsetWidth * dpr;
+    this.canvas.height = this.canvas.offsetHeight * dpr;
+    this.ctx.scale(dpr, dpr);
+    this.G = this.canvas.offsetWidth;   /* Genişlik */
+    this.Y = this.canvas.offsetHeight;  /* Yükseklik */
   }
 
-  _mkParticle() {
+  _yeniParcacik() {
     return {
-      x: Math.random() * 2000,
-      y: Math.random() * 68,
-      r: Math.random() * 1.4 + 0.4,
-      vx: -(Math.random() * 0.6 + 0.2),
-      vy: (Math.random() - 0.5) * 0.3,
-      a: Math.random() * 0.5 + 0.1,
-      hue: Math.random() > 0.5 ? '#d4af37' : '#e8cb6a'
+      x:  Math.random() * 1500,
+      y:  Math.random() * 56,
+      r:  Math.random() * 1.3 + .4,
+      vx: -(Math.random() * .5 + .15),
+      vy: (Math.random() - .5) * .25,
+      a:  Math.random() * .45 + .1,
+      renk: Math.random() > .5 ? '#d4af37' : '#e8cb6a'
     };
   }
 
-  _drawBg() {
-    const ctx = this.ctx;
-    const grad = ctx.createLinearGradient(0, 0, this.W, 0);
-    grad.addColorStop(0,   '#0d0904');
-    grad.addColorStop(0.5, '#1a1008');
-    grad.addColorStop(1,   '#0d0904');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, this.W, this.H);
+  _cizArkaPlan() {
+    const g = this.ctx.createLinearGradient(0, 0, this.G, 0);
+    g.addColorStop(0,   '#0a0603');
+    g.addColorStop(.5,  '#1a1008');
+    g.addColorStop(1,   '#0a0603');
+    this.ctx.fillStyle = g;
+    this.ctx.fillRect(0, 0, this.G, this.Y);
   }
 
-  _drawParticles() {
-    const ctx = this.ctx;
-    this.particles.forEach(p => {
+  _cizParcaciklar() {
+    this.parcaciklar.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
-      if (p.x < -10) p.x = this.W + 10;
-      if (p.y < 0 || p.y > this.H) p.vy *= -1;
+      if (p.x < -5) p.x = this.G + 5;
+      if (p.y < 0 || p.y > this.Y) p.vy *= -1;
 
-      ctx.save();
-      ctx.globalAlpha = p.a * 0.6;
-      ctx.fillStyle = p.hue;
-      ctx.shadowColor = p.hue;
-      ctx.shadowBlur = 6;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
+      this.ctx.save();
+      this.ctx.globalAlpha = p.a * .55;
+      this.ctx.fillStyle   = p.renk;
+      this.ctx.shadowColor = p.renk;
+      this.ctx.shadowBlur  = 5;
+      this.ctx.beginPath();
+      this.ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      this.ctx.fill();
+      this.ctx.restore();
     });
   }
 
-  _drawGlowLine() {
-    const ctx = this.ctx;
-    const t = Date.now() / 1000;
-    const gx = ctx.createLinearGradient(0, 0, this.W, 0);
-    gx.addColorStop(0,   'transparent');
-    gx.addColorStop(0.3, `rgba(212,175,55,${0.08 + 0.05 * Math.sin(t)})`);
-    gx.addColorStop(0.7, `rgba(212,175,55,${0.12 + 0.05 * Math.sin(t + 1)})`);
-    gx.addColorStop(1,   'transparent');
-    ctx.fillStyle = gx;
-    ctx.fillRect(0, 0, this.W, this.H);
-  }
+  _cizMetin() {
+    const mesaj  = this.mesajlar[this.simdiki];
+    const SOLDOL = 44; /* Emoji ikonundan sonra başla */
+    const maxGen = this.G - SOLDOL - 12;
+    const boyut  = Math.min(15, this.G / 26);
 
-  _drawText() {
-    const ctx = this.ctx;
-    const msg = this.messages[this.current];
-    const PADDING = 110; // leave space for "📢 DUYURU" label
+    this.ctx.save();
+    this.ctx.globalAlpha  = this.alfa;
+    this.ctx.fillStyle    = '#fdf5e6';
+    this.ctx.shadowColor  = '#d4af37';
+    this.ctx.shadowBlur   = 14 * this.alfa;
+    this.ctx.font         = `italic 600 ${boyut}px 'Lora', serif`;
+    this.ctx.textBaseline = 'middle';
+    this.ctx.textAlign    = 'left';
 
-    ctx.save();
-    ctx.globalAlpha = this.alpha;
+    /* Kırpma alanı */
+    this.ctx.beginPath();
+    this.ctx.rect(SOLDOL, 0, maxGen, this.Y);
+    this.ctx.clip();
 
-    // Glow halo
-    ctx.shadowColor = '#d4af37';
-    ctx.shadowBlur  = 18 * this.alpha;
-    ctx.fillStyle   = '#fdf5e6';
-    ctx.font        = `italic 600 ${Math.min(17, this.W / 28)}px 'Lora', serif`;
-    ctx.textBaseline = 'middle';
-    ctx.textAlign    = 'left';
-
-    // Clip to avoid overlap with label
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(PADDING, 0, this.W - PADDING - 16, this.H);
-    ctx.clip();
-
-    // Measure and truncate if needed
-    const maxW = this.W - PADDING - 20;
-    let displayMsg = msg;
-    while (ctx.measureText(displayMsg).width > maxW && displayMsg.length > 6) {
-      displayMsg = displayMsg.slice(0, -4) + '...';
+    /* Uzun mesajı kes */
+    let goster = mesaj;
+    while (this.ctx.measureText(goster).width > maxGen && goster.length > 4) {
+      goster = goster.slice(0, -4) + '…';
     }
 
-    ctx.fillText(displayMsg, PADDING, this.H / 2);
-    ctx.restore();
-    ctx.restore();
+    this.ctx.fillText(goster, SOLDOL, this.Y / 2);
+    this.ctx.restore();
   }
 
-  _loop() {
+  _dongu() {
     const ctx = this.ctx;
-    ctx.clearRect(0, 0, this.W, this.H);
-    this._drawBg();
-    this._drawGlowLine();
-    this._drawParticles();
-    this._drawText();
+    ctx.clearRect(0, 0, this.G, this.Y);
+    this._cizArkaPlan();
+    this._cizParcaciklar();
+    this._cizMetin();
 
-    // State machine
-    if (this.state === 'fade-in') {
-      this.alpha = Math.min(1, this.alpha + 1 / this.FADE);
-      if (this.alpha >= 1) { this.state = 'hold'; this.tick = 0; }
-    } else if (this.state === 'hold') {
-      this.tick++;
-      if (this.tick >= this.HOLD) this.state = 'fade-out';
-    } else if (this.state === 'fade-out') {
-      this.alpha = Math.max(0, this.alpha - 1 / this.FADE);
-      if (this.alpha <= 0) {
-        this.current = (this.current + 1) % this.messages.length;
-        this.state   = 'fade-in';
+    /* Durum makinesi */
+    if (this.durum === 'gir') {
+      this.alfa = Math.min(1, this.alfa + 1 / this.GECİS);
+      if (this.alfa >= 1) { this.durum = 'bekle'; this.tik = 0; }
+    } else if (this.durum === 'bekle') {
+      this.tik++;
+      if (this.tik >= this.BEKLE) this.durum = 'cik';
+    } else if (this.durum === 'cik') {
+      this.alfa = Math.max(0, this.alfa - 1 / this.GECİS);
+      if (this.alfa <= 0) {
+        this.simdiki = (this.simdiki + 1) % this.mesajlar.length;
+        this.durum = 'gir';
       }
     }
 
-    requestAnimationFrame(() => this._loop());
+    requestAnimationFrame(() => this._dongu());
   }
 }
 
-/* ═══════════════════════════════════════════════════════
-   MENU RENDERER
-═══════════════════════════════════════════════════════ */
-function buildMenu(data) {
-  // Header
-  document.getElementById('restaurantName').innerHTML =
-    data.restaurant.name +
-    `<span>${data.restaurant.tagline}</span>`;
-  document.title = data.restaurant.name + ' — Dijital Menü';
+/* ════════════════════════════════════════════════════════
+   MENÜ OLUŞTURMA FONKSİYONLARI
+════════════════════════════════════════════════════════ */
 
-  // Owner note
-  if (data.ownerNote) {
-    const noteEl = document.getElementById('ownerNote');
-    document.getElementById('ownerNoteText').textContent = data.ownerNote;
-    noteEl.style.display = 'flex';
+/* Tüm veriyi alıp sayfayı oluşturur */
+function menuOlustur(veri) {
+  /* ── Header ── */
+  document.getElementById('restoranAd').innerHTML =
+    veri.restaurant.name + `<em>${veri.restaurant.tagline}</em>`;
+  document.title = veri.restaurant.name + ' — Dijital Menü';
+
+  /* ── Usta notu ── */
+  const ustaNotu = veri.ownerNote?.text || veri.ownerNote;
+  if (ustaNotu) {
+    document.getElementById('ustaMetnİ').textContent = ustaNotu;
+    document.getElementById('ustaNotu').style.display = 'flex';
   }
 
-  // Category nav
-  const nav = document.getElementById('categoryNav');
-  data.categories.forEach((cat, i) => {
+  /* ── Kategorileri al ── */
+  const kategoriler = veri.categories?.liste || veri.categories;
+
+  /* ── Üst sekmeler ── */
+  const nav = document.getElementById('kategoriNav');
+  kategoriler.forEach((kat, i) => {
     const btn = document.createElement('button');
-    btn.className = 'cat-tab' + (i === 0 ? ' active' : '');
+    btn.className = 'sekme' + (i === 0 ? ' aktif' : '');
     btn.setAttribute('role', 'tab');
-    btn.innerHTML = `<span class="tab-icon">${cat.icon}</span>${cat.name}`;
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const target = document.getElementById('cat-' + cat.id);
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    btn.dataset.katId = kat.id;
+    btn.innerHTML = `<span class="sekme-ikon">${kat.icon}</span>${kat.name}`;
+    btn.addEventListener('click', () => sekmeTikla(kat.id, btn, 'ust'));
     nav.appendChild(btn);
   });
 
-  // Menu sections
-  const main = document.getElementById('menuMain');
-  data.categories.forEach(cat => {
-    const section = document.createElement('section');
-    section.className = 'category-section';
-    section.id = 'cat-' + cat.id;
-
-    const title = document.createElement('h2');
-    title.className = 'category-title';
-    title.innerHTML = `<span>${cat.icon}</span> ${cat.name}`;
-    section.appendChild(title);
-
-    const grid = document.createElement('div');
-    grid.className = 'menu-grid';
-
-    cat.items.forEach(item => {
-      grid.appendChild(buildCard(item));
-    });
-
-    section.appendChild(grid);
-    main.appendChild(section);
+  /* ── Alt navigasyon (mobil) ── */
+  const altNav = document.getElementById('altNav');
+  kategoriler.forEach((kat, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'alt-sekme' + (i === 0 ? ' aktif' : '');
+    btn.dataset.katId = kat.id;
+    btn.innerHTML = `
+      <span class="alt-sekme-ikon">${kat.icon}</span>
+      <span class="alt-sekme-yazi">${kat.name}</span>
+    `;
+    btn.addEventListener('click', () => sekmeTikla(kat.id, btn, 'alt'));
+    altNav.appendChild(btn);
   });
 
-  // Footer
-  const footer = document.getElementById('siteFooter');
-  footer.innerHTML = `
-    <strong>${data.restaurant.name}</strong><br>
-    📍 ${data.restaurant.address}&nbsp;&nbsp;|&nbsp;&nbsp;📞 ${data.restaurant.phone}<br><br>
-    <small>Dijital menü — Fiyatlar KDV dahildir. Bilgiler güncellenebilir.</small>
+  /* ── Menü bölümleri ── */
+  const ana = document.getElementById('menuAna');
+  kategoriler.forEach(kat => {
+    ana.appendChild(bolumOlustur(kat));
+  });
+
+  /* ── Footer ── */
+  document.getElementById('siteFooter').innerHTML = `
+    <strong>${veri.restaurant.name}</strong><br>
+    📍 ${veri.restaurant.address}
+    &nbsp;|&nbsp;
+    📞 <a href="tel:${veri.restaurant.phone.replace(/\s/g,'')}">${veri.restaurant.phone}</a>
+    <br><br>
+    <small>Fiyatlar KDV dahildir. Güncelleme tarihi: ${bugunTarih()}</small>
   `;
 
-  // Canvas announcements
-  new AnnouncementBoard(
-    document.getElementById('announcementCanvas'),
-    data.announcements
-  );
+  /* ── Canvas Duyuru ── */
+  const duyurular = veri.announcements?.mesajlar || veri.announcements;
+  new DuyuruPanosu(document.getElementById('duyuruCanvas'), duyurular);
 
-  // Hide loading
+  /* Yükleniyor ekranını gizle */
   setTimeout(() => {
-    document.getElementById('loading').classList.add('hidden');
-  }, 600);
+    document.getElementById('yukleniyor').classList.add('gizli');
+  }, 500);
 }
 
-function buildCard(item) {
-  const card = document.createElement('article');
-  card.className = 'menu-card';
-
-  // Badge
-  if (item.badge) {
-    const badge = document.createElement('div');
-    badge.className = 'badge' + (item.badge === 'Şef Önerisi' || item.badge === 'Yeni' ? ' gold' : '');
-    badge.textContent = item.badge;
-    card.appendChild(badge);
+/* Sekmeye tıklama — hem üst hem alt senkron çalışır */
+function sekmeTikla(katId, tiklayanBtn, kaynakEl) {
+  /* Üst sekmeleri güncelle */
+  document.querySelectorAll('.sekme').forEach(b => {
+    b.classList.toggle('aktif', b.dataset.katId === katId);
+  });
+  /* Alt sekmeleri güncelle */
+  document.querySelectorAll('.alt-sekme').forEach(b => {
+    b.classList.toggle('aktif', b.dataset.katId === katId);
+  });
+  /* İlgili bölüme kaydır */
+  const hedef = document.getElementById('kat-' + katId);
+  if (hedef) {
+    const ust = hedef.getBoundingClientRect().top + window.scrollY;
+    /* Sticky header yüksekliği kadar yukarıya çek */
+    const offset = document.querySelector('.kategori-nav')?.offsetHeight || 50;
+    window.scrollTo({ top: ust - offset - 8, behavior: 'smooth' });
   }
+}
 
-  // Image
-  const imgWrap = document.createElement('div');
-  imgWrap.className = 'card-img-wrapper';
+/* Tek kategori bölümünü oluşturur */
+function bolumOlustur(kat) {
+  const bolum = document.createElement('section');
+  bolum.className = 'kategori-bolum';
+  bolum.id = 'kat-' + kat.id;
+
+  const baslik = document.createElement('h2');
+  baslik.className = 'kategori-baslik';
+  baslik.innerHTML = `<span>${kat.icon}</span> ${kat.name}`;
+  bolum.appendChild(baslik);
+
+  const liste = document.createElement('div');
+  liste.className = 'menu-listesi';
+
+  kat.items.forEach(urun => {
+    /* Açıklama objelerini atla */
+    if (typeof urun !== 'object' || !urun.name) return;
+    liste.appendChild(kartOlustur(urun));
+  });
+
+  bolum.appendChild(liste);
+  return bolum;
+}
+
+/* Tek yemek kartını oluşturur */
+function kartOlustur(urun) {
+  const kart = document.createElement('article');
+  kart.className = 'menu-karti';
+  kart.setAttribute('aria-label', urun.name);
+
+  /* ── Görsel alanı ── */
+  const gorselDiv = document.createElement('div');
+  gorselDiv.className = 'kart-gorsel';
 
   const placeholder = document.createElement('div');
-  placeholder.className = 'card-img-placeholder';
-  placeholder.innerHTML = `🫓 <span>Görsel yükleniyor</span>`;
-  imgWrap.appendChild(placeholder);
+  placeholder.className = 'gorsel-placeholder';
+  placeholder.innerHTML = `🫓 <small>Görsel</small>`;
+  gorselDiv.appendChild(placeholder);
 
   const img = document.createElement('img');
-  img.className = 'card-img';
-  img.alt = item.name;
-  img.loading = 'lazy';
+  img.className = 'kart-img';
+  img.alt = urun.name;
+  img.loading = 'lazy'; /* Ekranda görünene kadar yükleme yapmaz — performans */
+  img.decoding = 'async';
   img.onload = () => {
-    img.classList.add('loaded');
+    img.classList.add('yuklendi');
     placeholder.style.display = 'none';
   };
   img.onerror = () => {
-    placeholder.innerHTML = `🫓 <span>${item.name}</span>`;
-    // keep placeholder, no broken image icon
+    /* Görsel yoksa emoji+isim göster — broken image ikonu yok */
+    placeholder.innerHTML = `🫓 <small>${urun.name}</small>`;
   };
-  img.src = item.image;
-  imgWrap.appendChild(img);
-  card.appendChild(imgWrap);
+  img.src = urun.image;
+  gorselDiv.appendChild(img);
 
-  // Body
-  const body = document.createElement('div');
-  body.className = 'card-body';
+  /* ── Rozet ── */
+  if (urun.badge) {
+    const rozet = document.createElement('span');
+    rozet.className = 'rozet' + (
+      ['Şef Önerisi','Yeni','İndirimli'].includes(urun.badge) ? ' altin' : ''
+    );
+    rozet.textContent = urun.badge;
+    gorselDiv.appendChild(rozet);
+  }
 
-  const name = document.createElement('h3');
-  name.className = 'card-name';
-  name.textContent = item.name;
+  /* ── Bilgi alanı ── */
+  const bilgi = document.createElement('div');
+  bilgi.className = 'kart-bilgi';
 
-  const desc = document.createElement('p');
-  desc.className = 'card-desc';
-  desc.textContent = item.description;
+  const ad = document.createElement('h3');
+  ad.className = 'kart-ad';
+  ad.textContent = urun.name;
 
-  const footer = document.createElement('div');
-  footer.className = 'card-footer';
+  const aciklama = document.createElement('p');
+  aciklama.className = 'kart-aciklama';
+  aciklama.textContent = urun.description;
 
-  const price = document.createElement('span');
-  price.className = 'card-price';
-  price.textContent = item.price;
+  const alt = document.createElement('div');
+  alt.className = 'kart-alt';
 
-  const tag = document.createElement('span');
-  tag.className = 'card-tag';
-  tag.textContent = 'Taş Fırın';
+  const fiyat = document.createElement('span');
+  fiyat.className = 'kart-fiyat';
+  fiyat.textContent = urun.price;
 
-  footer.appendChild(price);
-  footer.appendChild(tag);
-  body.appendChild(name);
-  body.appendChild(desc);
-  body.appendChild(footer);
-  card.appendChild(body);
+  const etiket = document.createElement('span');
+  etiket.className = 'kart-etiket';
+  etiket.textContent = 'Taş Fırın';
 
-  return card;
+  alt.appendChild(fiyat);
+  alt.appendChild(etiket);
+  bilgi.appendChild(ad);
+  bilgi.appendChild(aciklama);
+  bilgi.appendChild(alt);
+
+  kart.appendChild(gorselDiv);
+  kart.appendChild(bilgi);
+  return kart;
 }
 
-/* ═══════════════════════════════════════════════════════
-   SCROLL TO TOP BUTTON
-═══════════════════════════════════════════════════════ */
-window.addEventListener('scroll', () => {
-  const btn = document.getElementById('scrollTop');
-  if (window.scrollY > 350) btn.classList.add('visible');
-  else btn.classList.remove('visible');
-});
-
-/* ═══════════════════════════════════════════════════════
-   INTERSECTION OBSERVER — active nav on scroll
-═══════════════════════════════════════════════════════ */
-function initScrollSpy() {
-  const sections = document.querySelectorAll('.category-section');
-  const tabs     = document.querySelectorAll('.cat-tab');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id.replace('cat-', '');
-        tabs.forEach(t => {
-          t.classList.toggle('active', t.querySelector('.tab-icon').nextSibling.textContent.trim() ===
-            document.querySelector(`#cat-${id} .category-title`)?.textContent.trim().replace(/^.\s/, ''));
+/* ════════════════════════════════════════════════════════
+   SCROLL SPY — Kaydırıldıkça aktif sekmeyi günceller
+════════════════════════════════════════════════════════ */
+function scrollSpyBaslat() {
+  const bolumler = document.querySelectorAll('.kategori-bolum');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id.replace('kat-', '');
+        document.querySelectorAll('.sekme, .alt-sekme').forEach(b => {
+          b.classList.toggle('aktif', b.dataset.katId === id);
         });
       }
     });
-  }, { threshold: 0.3 });
-  sections.forEach(s => obs.observe(s));
+  }, {
+    threshold: 0.25,
+    rootMargin: '-60px 0px -40% 0px'
+  });
+  bolumler.forEach(b => observer.observe(b));
 }
 
-/* ═══════════════════════════════════════════════════════
-   FETCH & INIT
-═══════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════
+   YARDIMCI FONKSİYONLAR
+════════════════════════════════════════════════════════ */
+function bugunTarih() {
+  return new Date().toLocaleDateString('tr-TR', {
+    day: 'numeric', month: 'long', year: 'numeric'
+  });
+}
+
+/* ════════════════════════════════════════════════════════
+   UYGULAMA BAŞLATICI — menu.json'ı yükler
+════════════════════════════════════════════════════════ */
 fetch('menu.json')
   .then(r => {
-    if (!r.ok) throw new Error('menu.json yüklenemedi: ' + r.status);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
     return r.json();
   })
-  .then(data => {
-    buildMenu(data);
-    initScrollSpy();
+  .then(veri => {
+    menuOlustur(veri);
+    scrollSpyBaslat();
   })
-  .catch(err => {
-    console.error(err);
-    document.getElementById('loading').innerHTML = `
-      <div style="color:#fdf5e6;font-family:'Playfair Display',serif;text-align:center;padding:24px">
+  .catch(hata => {
+    console.error('Menü yüklenemedi:', hata);
+    const yukl = document.getElementById('yukleniyor');
+    yukl.innerHTML = `
+      <div style="color:var(--krem);font-family:'Playfair Display',serif;text-align:center;padding:24px">
         <div style="font-size:3rem">⚠️</div>
-        <p style="margin-top:16px">Menü yüklenemedi.</p>
-        <p style="font-size:.8rem;opacity:.7;margin-top:8px">menu.json dosyasını kontrol edin.</p>
+        <p style="margin-top:14px;font-size:1rem">Menü yüklenemedi</p>
+        <p style="font-size:.78rem;opacity:.65;margin-top:8px">
+          menu.json dosyasının aynı klasörde olduğundan emin olun.
+        </p>
+        <button onclick="location.reload()" style="
+          margin-top:18px;padding:10px 24px;
+          background:var(--altin);color:var(--koyu);
+          border:none;border-radius:8px;
+          font-family:'Lora',serif;font-size:.9rem;
+          cursor:pointer">
+          Tekrar Dene
+        </button>
       </div>
     `;
-    document.getElementById('loading').classList.remove('hidden');
-    document.getElementById('loading').style.opacity = '1';
-    document.getElementById('loading').style.visibility = 'visible';
+    yukl.style.opacity = '1';
+    yukl.style.visibility = 'visible';
   });
 </script>
 </body>
