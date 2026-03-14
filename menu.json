@@ -1,0 +1,126 @@
+{
+  "restaurant": {
+    "name": "Adıyaman Pide",
+    "tagline": "Geleneksel Lezzet, Asırlık Tarif",
+    "phone": "0416 XXX XX XX",
+    "address": "Adıyaman Merkez"
+  },
+  "announcements": [
+    "🔥 Bugün taze kuzu eti ile hazırladık — doğrudan çiftlikten!",
+    "🌿 Tüm pidelerimiz taş fırında, odun ateşinde pişirilmektedir.",
+    "⭐ Haftanın önerisi: Kaşarlı Kuşbaşılı Pide — sadece bugün %15 indirimli!",
+    "🎉 10 ve üzeri siparişlerde ücretsiz servis imkânı mevcuttur."
+  ],
+  "ownerNote": "Sevgili misafirlerimiz, her lokmada emek ve sevgi var. Afiyet olsun! — Usta Mehmet",
+  "categories": [
+    {
+      "id": "pideler",
+      "name": "Pidelerimiz",
+      "icon": "🫓",
+      "items": [
+        {
+          "id": 1,
+          "name": "Kıymalı Pide",
+          "description": "İnce çekilmiş dana kıyması, soğan, maydanoz ve özel baharatlarla hazırlanmış klasik Adıyaman pidesi.",
+          "price": 180,
+          "image": "images/kiymali-pide.jpg",
+          "badge": "En Çok Satan"
+        },
+        {
+          "id": 2,
+          "name": "Kaşarlı Pide",
+          "description": "Bol erimiş kaşar peyniri, taze domates ve sivri biber ile çıtır hamur üzerinde.",
+          "price": 160,
+          "image": "images/kasarli-pide.jpg",
+          "badge": null
+        },
+        {
+          "id": 3,
+          "name": "Kuşbaşılı Pide",
+          "description": "Taze kuzu kuşbaşı, biber, domates ve sarımsaklı tereyağı ile pişirilmiş özel tarifimiz.",
+          "price": 220,
+          "image": "images/kusbasi-pide.jpg",
+          "badge": "Şef Önerisi"
+        },
+        {
+          "id": 4,
+          "name": "Yumurtalı Sucuklu Pide",
+          "description": "Kıbrıs sucuğu, köy yumurtası ve taze yeşilliklerle lezzet dolu bir pide deneyimi.",
+          "price": 175,
+          "image": "images/sucuklu-pide.jpg",
+          "badge": null
+        },
+        {
+          "id": 5,
+          "name": "Karışık Pide",
+          "description": "Kıyma, kaşar, sucuk ve yumurtanın muhteşem birlikteliği — her dilimde farklı bir lezzet.",
+          "price": 240,
+          "image": "images/karisik-pide.jpg",
+          "badge": "Yeni"
+        },
+        {
+          "id": 6,
+          "name": "Ispanaklı Beyaz Peynirli Pide",
+          "description": "Taze ıspanak, Ege beyaz peyniri ve çam fıstığı ile vegeteryanların favorisi.",
+          "price": 165,
+          "image": "images/ispanakli-pide.jpg",
+          "badge": null
+        }
+      ]
+    },
+    {
+      "id": "lahmacun",
+      "name": "Lahmacun",
+      "icon": "🌮",
+      "items": [
+        {
+          "id": 7,
+          "name": "Adıyaman Lahmacunu",
+          "description": "İnce açılmış hamur üzerinde özel baharatlı kıyma harcı — acı veya aci-siz seçeneğiyle.",
+          "price": 70,
+          "image": "images/lahmacun.jpg",
+          "badge": "Geleneksel"
+        },
+        {
+          "id": 8,
+          "name": "Fındıklı Lahmacun",
+          "description": "Kıyma harcının içine eklenmiş çam fıstığı ve kuru üzüm ile Güneydoğu'nun eşsiz tadı.",
+          "price": 85,
+          "image": "images/findikli-lahmacun.jpg",
+          "badge": null
+        }
+      ]
+    },
+    {
+      "id": "icecekler",
+      "name": "İçecekler",
+      "icon": "🥤",
+      "items": [
+        {
+          "id": 9,
+          "name": "Ayran",
+          "description": "Günlük taze yapılmış köy ayranı.",
+          "price": 35,
+          "image": "images/ayran.jpg",
+          "badge": null
+        },
+        {
+          "id": 10,
+          "name": "Şalgam Suyu",
+          "description": "Geleneksel ekşi şalgam suyu — acı veya sade.",
+          "price": 40,
+          "image": "images/salgam.jpg",
+          "badge": null
+        },
+        {
+          "id": 11,
+          "name": "Çay",
+          "description": "Doğu Karadeniz çayı, demlik servis.",
+          "price": 20,
+          "image": "images/cay.jpg",
+          "badge": null
+        }
+      ]
+    }
+  ]
+}
