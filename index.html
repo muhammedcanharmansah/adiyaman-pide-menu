@@ -9,7 +9,7 @@
 <title>Adıyaman Pide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Montserrat:wght@400;500;600&family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 
 <style>
 /* ══════════════════════════════════════════
@@ -30,8 +30,9 @@
   --white-60:   rgba(255,255,255,0.6);
   --white-30:   rgba(255,255,255,0.3);
   --white-10:   rgba(255,255,255,0.07);
-  --serif:      'Cormorant Garamond', Georgia, serif;
-  --sans:       'DM Sans', system-ui, sans-serif;
+  --f-heading:  'Cinzel', 'Playfair Display', Georgia, serif;
+  --f-sub:      'Montserrat', system-ui, sans-serif;
+  --f-body:     'Lato', system-ui, sans-serif;
   --touch:      52px;
   --r:          14px;
 }
@@ -51,11 +52,11 @@ html {
 }
 
 body {
-  font-family: var(--sans);
+  font-family: var(--f-body);
   background: var(--black);
   color: var(--white);
   overflow-x: hidden;
-  padding-bottom: calc(68px + env(safe-area-inset-bottom));
+  padding-bottom: 24px;
   min-height: 100dvh;
 }
 
@@ -81,10 +82,11 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .load-name {
-  font-family: var(--serif);
-  font-size: 1.5rem;
+  font-family: var(--f-heading);
+  font-size: 1.2rem;
   color: var(--gold);
-  letter-spacing: .06em;
+  letter-spacing: .18em;
+  text-transform: uppercase;
 }
 
 /* ══════════════════════════════════════════
@@ -143,23 +145,25 @@ header::after {
 }
 
 header h1 {
-  font-family: var(--serif);
-  font-size: clamp(2rem, 9vw, 3rem);
+  font-family: var(--f-heading);
+  font-size: clamp(1.5rem, 7vw, 2.4rem);
   font-weight: 700;
   color: var(--gold);
-  letter-spacing: .03em;
-  line-height: 1;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  line-height: 1.1;
   margin-bottom: 6px;
 }
 
 header h1 em {
   display: block;
-  font-size: .4em;
-  font-weight: 400;
-  color: var(--white-60);
-  letter-spacing: .18em;
+  font-family: var(--f-sub);
+  font-size: clamp(.62rem, 2.5vw, .75rem);
+  font-weight: 500;
+  color: var(--green);
+  letter-spacing: .2em;
   text-transform: uppercase;
-  margin-top: 8px;
+  margin-top: 10px;
   font-style: normal;
 }
 
@@ -209,11 +213,11 @@ header h1 em {
   font-size: 1.3rem; flex-shrink: 0; margin-top: 1px;
 }
 .owner-band-text {
-  font-family: var(--serif);
+  font-family: var(--f-body);
   font-style: italic;
-  font-size: .95rem;
+  font-size: .9rem;
   color: rgba(212,175,55,.85);
-  line-height: 1.55;
+  line-height: 1.7;
 }
 
 /* ══════════════════════════════════════════
@@ -235,27 +239,28 @@ header h1 em {
 .cat-btn {
   flex-shrink: 0;
   min-height: var(--touch);
-  padding: 0 18px;
+  padding: 0 16px;
   background: none; border: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
-  font-family: var(--sans);
-  font-size: .78rem;
-  font-weight: 400;
+  font-family: var(--f-sub);
+  font-size: .68rem;
+  font-weight: 500;
   color: var(--white-30);
   display: flex; align-items: center; gap: 6px;
   transition: color .2s, border-color .2s;
   white-space: nowrap;
   position: relative; bottom: -1px;
-  letter-spacing: .04em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 .cat-btn:active { background: var(--white-10); }
 .cat-btn.on {
   color: var(--gold);
   border-bottom-color: var(--gold);
-  font-weight: 500;
+  font-weight: 600;
 }
-.cat-icon { font-size: .95rem; }
+.cat-icon { font-size: .9rem; }
 
 /* ══════════════════════════════════════════
    MAIN
@@ -280,17 +285,22 @@ main { max-width: 640px; margin: 0 auto; padding: 0 0 32px; }
   font-size: 1.2rem; flex-shrink: 0;
 }
 .sec-title {
-  font-family: var(--serif);
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-family: var(--f-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
   color: var(--gold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
   line-height: 1;
 }
 .sec-count {
-  font-size: .7rem;
-  color: var(--white-30);
-  margin-top: 3px;
-  letter-spacing: .06em;
+  font-family: var(--f-sub);
+  font-size: .6rem;
+  font-weight: 500;
+  color: var(--green);
+  margin-top: 4px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
 }
 
 /* ══════════════════════════════════════════
@@ -374,8 +384,9 @@ main { max-width: 640px; margin: 0 auto; padding: 0 0 32px; }
 /* ── BADGE ── */
 .badge {
   position: absolute; top: 8px; left: 8px; z-index: 2;
-  font-size: .58rem; font-weight: 600;
-  letter-spacing: .06em; text-transform: uppercase;
+  font-family: var(--f-sub);
+  font-size: .54rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
   padding: 3px 8px; border-radius: 20px;
   white-space: nowrap;
 }
@@ -390,10 +401,10 @@ main { max-width: 640px; margin: 0 auto; padding: 0 0 32px; }
   display: flex; flex-direction: column; justify-content: space-between;
 }
 .card-name {
-  font-family: var(--serif);
-  font-size: 1.05rem; font-weight: 600;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem; font-weight: 700;
   color: var(--white);
-  line-height: 1.2;
+  line-height: 1.25;
   margin-bottom: 5px;
   overflow: hidden;
   display: -webkit-box;
@@ -401,10 +412,11 @@ main { max-width: 640px; margin: 0 auto; padding: 0 0 32px; }
   -webkit-box-orient: vertical;
 }
 .card-desc {
-  font-size: .75rem; font-weight: 300;
+  font-family: var(--f-body);
+  font-size: .76rem; font-weight: 300;
   color: var(--white-30);
   font-style: italic;
-  line-height: 1.5;
+  line-height: 1.7;
   flex: 1; margin-bottom: 10px;
   overflow: hidden;
   display: -webkit-box;
@@ -416,21 +428,24 @@ main { max-width: 640px; margin: 0 auto; padding: 0 0 32px; }
   justify-content: space-between; gap: 8px;
 }
 .card-price {
-  font-family: var(--serif);
-  font-size: 1.25rem; font-weight: 600;
+  font-family: var(--f-heading);
+  font-size: 1.1rem; font-weight: 700;
   color: var(--gold);
   line-height: 1;
+  letter-spacing: .04em;
 }
 .card-price-sym {
   font-size: .7em; font-weight: 400;
   margin-right: 1px; vertical-align: middle;
 }
 .card-tag {
-  font-size: .62rem; font-weight: 400;
+  font-family: var(--f-sub);
+  font-size: .58rem; font-weight: 600;
   color: var(--green);
   border: .5px solid var(--green-line);
   padding: 2px 8px; border-radius: 20px;
-  letter-spacing: .04em;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 
 /* ══════════════════════════════════════════
@@ -443,48 +458,6 @@ main { max-width: 640px; margin: 0 auto; padding: 0 0 32px; }
 }
 
 /* ══════════════════════════════════════════
-   BOTTOM NAV — mobile app style
-══════════════════════════════════════════ */
-.bottom-nav {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
-  background: rgba(0,0,0,.97);
-  border-top: .5px solid var(--black-line);
-  display: flex;
-  padding-bottom: env(safe-area-inset-bottom);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-.bn-btn {
-  flex: 1;
-  min-height: var(--touch);
-  background: none; border: none;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 3px; padding: 8px 4px;
-  cursor: pointer;
-  color: var(--white-30);
-  transition: color .2s;
-  position: relative;
-}
-.bn-btn:active { background: var(--white-10); }
-.bn-btn.on { color: var(--gold); }
-.bn-btn.on::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 25%; right: 25%;
-  height: 1.5px;
-  background: var(--gold);
-  border-radius: 0 0 2px 2px;
-}
-.bn-icon { font-size: 1.15rem; }
-.bn-label {
-  font-size: .6rem; font-weight: 500;
-  letter-spacing: .04em;
-  overflow: hidden; text-overflow: ellipsis;
-  white-space: nowrap; max-width: 100%; padding: 0 2px;
-}
-
-/* ══════════════════════════════════════════
    FOOTER
 ══════════════════════════════════════════ */
 footer {
@@ -494,16 +467,19 @@ footer {
   text-align: center;
 }
 .footer-logo {
-  font-family: var(--serif);
-  font-size: 1.5rem; font-weight: 700;
+  font-family: var(--f-heading);
+  font-size: 1.1rem; font-weight: 700;
   color: var(--gold);
+  letter-spacing: .14em;
+  text-transform: uppercase;
   margin-bottom: 6px;
 }
 .footer-tagline {
-  font-family: var(--serif);
+  font-family: var(--f-body);
   font-style: italic;
   font-size: .85rem;
   color: var(--white-30);
+  line-height: 1.7;
   margin-bottom: 20px;
 }
 .footer-orn {
@@ -514,17 +490,20 @@ footer {
 .footer-orn-dot  { width: 4px; height: 4px; background: var(--gold); transform: rotate(45deg); }
 
 .footer-info {
+  font-family: var(--f-body);
   font-size: .8rem;
   color: var(--white-30);
   line-height: 2;
 }
 .footer-info a { color: var(--green); text-decoration: none; }
 .footer-badge {
+  font-family: var(--f-sub);
   display: inline-block; margin-top: 16px;
   border: .5px solid var(--gold-line);
   padding: 5px 16px; border-radius: 20px;
-  font-size: .65rem; letter-spacing: .14em;
+  font-size: .58rem; letter-spacing: .16em;
   text-transform: uppercase; color: var(--gold);
+  font-weight: 600;
 }
 
 /* ══════════════════════════════════════════
@@ -537,8 +516,6 @@ footer {
     gap: 10px;
   }
   .card-img-wrap { width: 110px; }
-  .bottom-nav { display: none; }
-  body { padding-bottom: 0; }
 }
 </style>
 </head>
@@ -582,9 +559,6 @@ footer {
 
 <!-- FOOTER -->
 <footer id="siteFooter"></footer>
-
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav" id="bottomNav" role="navigation"></nav>
 
 <!-- ══ SCRIPTS ══ -->
 <script>
@@ -807,7 +781,7 @@ function buildSection(cat) {
    SYNC NAV ACTIVE STATE
 ──────────────────────────────── */
 function setActive(id) {
-  document.querySelectorAll('.cat-btn, .bn-btn').forEach(b => {
+  document.querySelectorAll('.cat-btn').forEach(b => {
     b.classList.toggle('on', b.dataset.id === id);
   });
 }
@@ -852,24 +826,16 @@ function render(d) {
 
   const cats = d.categories;
 
-  // top nav + bottom nav
+  // üst kategori nav — tek nav
   const catNav = document.getElementById('catNav');
-  const bnNav  = document.getElementById('bottomNav');
   cats.forEach((cat, i) => {
-    [catNav, bnNav].forEach((nav, ni) => {
-      const btn = document.createElement('button');
-      btn.className = 'cat-btn' + (i===0?' on':'');
-      if (ni===1) btn.className = 'bn-btn' + (i===0?' on':'');
-      btn.dataset.id = cat.id;
-      btn.setAttribute('role','tab');
-      if (ni===0) {
-        btn.innerHTML = `<span class="cat-icon">${cat.icon}</span>${cat.name}`;
-      } else {
-        btn.innerHTML = `<span class="bn-icon">${cat.icon}</span><span class="bn-label">${cat.name}</span>`;
-      }
-      btn.addEventListener('click', () => { setActive(cat.id); scrollTo(cat.id); });
-      nav.appendChild(btn);
-    });
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn' + (i === 0 ? ' on' : '');
+    btn.dataset.id = cat.id;
+    btn.setAttribute('role', 'tab');
+    btn.innerHTML = `<span class="cat-icon">${cat.icon}</span>${cat.name}`;
+    btn.addEventListener('click', () => { setActive(cat.id); scrollTo(cat.id); });
+    catNav.appendChild(btn);
   });
 
   // sections
