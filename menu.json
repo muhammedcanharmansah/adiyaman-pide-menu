@@ -1,24 +1,57 @@
 {
+  "_REHBER": {
+    "_not":     "JSON'da yorum satırı yoktur. Bu '_REHBER' bloğu size rehberlik eder, siteye yansımaz.",
+    "_kullanim":"Bu dosyayı bir metin editörüyle açıp düzenleyin. Kaydedin — site yenilendiğinde değişiklikler anında yansır.",
+    "_kural":   "Tırnak işaretlerini, virgülleri ve süslü parantezleri bozmayın. Değiştireceğiniz yalnızca metin ve rakamlar."
+  },
+
   "restaurant": {
-    "name": "Adıyaman Pide",
+    "_aciklama":  "Restoranın kimlik bilgileri. Sayfanın başlığında (header) ve en altında (footer) görünür.",
+    "_name":      "Menüde büyük yazıyla gösterilecek restoran adı.",
+    "_tagline":   "Adın hemen altında küçük italic yazı. Slogan veya kısa tanım.",
+    "_phone":     "Footer'da müşterilere gösterilecek telefon numarası.",
+    "_address":   "Footer'da gösterilecek adres. Kısa tutun.",
+    "name":    "Adıyaman Pide",
     "tagline": "Geleneksel Lezzet, Asırlık Tarif",
-    "phone": "0416 XXX XX XX",
+    "phone":   "0416 XXX XX XX",
     "address": "Adıyaman Merkez"
   },
+
   "announcements": [
+    "-- BU ALAN: Sayfanın en üstündeki siyah şeritte dönen duyuru mesajları.",
+    "-- Her satır ayrı bir mesaj olarak sırayla gösterilir (fade geçişiyle).",
+    "-- Mesaj başına emoji koyabilirsiniz: 🔥 🌿 ⭐ 🎉 🆕",
+    "-- Silmek istediğiniz mesajın tüm satırını silin. En az 1 mesaj bırakın.",
     "🔥 Bugün taze kuzu eti ile hazırladık — doğrudan çiftlikten!",
     "🌿 Tüm pidelerimiz taş fırında, odun ateşinde pişirilmektedir.",
     "⭐ Haftanın önerisi: Kaşarlı Kuşbaşılı Pide — sadece bugün %15 indirimli!",
     "🎉 10 ve üzeri siparişlerde ücretsiz servis imkânı mevcuttur."
   ],
-  "ownerNote": "Sevgili misafirlerimiz, her lokmada emek ve sevgi var. Afiyet olsun! — Usta Mehmet",
+
+  "ownerNote": {
+    "_aciklama": "Duyuru şeridinin hemen altında altın renkli bant içinde görünen kısa usta notu.",
+    "_ipucu":    "Bugünkü malzeme, teşekkür mesajı veya özel kampanya yazabilirsiniz. Boş bırakmak için text alanını boş string yapın: \"text\": \"\"",
+    "text": "Sevgili misafirlerimiz, her lokmada emek ve sevgi var. Afiyet olsun! — Usta Mehmet"
+  },
+
   "categories": [
     {
-      "id": "pideler",
+      "_aciklama_kategori": "Bir menü kategorisi. Üstteki sekmede görünür, tıklanınca o bölüme atlar.",
+      "_id":    "Benzersiz kısa kod — boşluk ve Türkçe karakter KULLANMAYIN. Dahili bağlantı için gerekli.",
+      "_name":  "Sekmede ve bölüm başlığında gösterilen kategori adı. Türkçe olabilir.",
+      "_icon":  "Kategori adının yanında küçük gösterilecek emoji.",
+      "id":   "pideler",
       "name": "Pidelerimiz",
       "icon": "🫓",
       "items": [
         {
+          "_aciklama_urun": "Tek bir yemek kartı. Aşağıdaki alanların tümünü doldurun.",
+          "_id":          "Tüm menüde benzersiz sayı. Başka ürünle aynı olmamalı.",
+          "_name":        "Kartın üst kısmında kalın yazıyla gösterilen yemek adı.",
+          "_description": "Malzemeleri veya pişirme yöntemini anlatan kısa açıklama (1-2 cümle yeterli).",
+          "_price":       "Rakam olarak fiyat. ₺ işareti otomatik eklenir. Kuruş kullanmayın.",
+          "_image":       "images/ klasörüne koyduğunuz görselin tam dosya adı. Dosya yoksa otomatik yer tutucu gösterilir.",
+          "_badge":       "Kartın köşesinde gösterilen renkli etiket. Kullanmak istemiyorsanız: null  |  Örnekler: 'En Çok Satan' 'Şef Önerisi' 'Yeni' 'Geleneksel' 'İndirimli'",
           "id": 1,
           "name": "Kıymalı Pide",
           "description": "İnce çekilmiş dana kıyması, soğan, maydanoz ve özel baharatlarla hazırlanmış klasik Adıyaman pidesi.",
@@ -68,15 +101,17 @@
         }
       ]
     },
+
     {
-      "id": "lahmacun",
+      "_aciklama_kategori": "İkinci kategori. Aynı yapıyı koruyarak istediğiniz kadar kategori ekleyebilirsiniz.",
+      "id":   "lahmacun",
       "name": "Lahmacun",
       "icon": "🌮",
       "items": [
         {
           "id": 7,
           "name": "Adıyaman Lahmacunu",
-          "description": "İnce açılmış hamur üzerinde özel baharatlı kıyma harcı — acı veya aci-siz seçeneğiyle.",
+          "description": "İnce açılmış hamur üzerinde özel baharatlı kıyma harcı — acı veya acısız seçeneğiyle.",
           "price": 70,
           "image": "images/lahmacun.jpg",
           "badge": "Geleneksel"
@@ -91,8 +126,10 @@
         }
       ]
     },
+
     {
-      "id": "icecekler",
+      "_aciklama_kategori": "Üçüncü kategori — içecekler. Kartlar küçük olduğu için image kısa tanımlayıcı görsel olabilir.",
+      "id":   "icecekler",
       "name": "İçecekler",
       "icon": "🥤",
       "items": [
