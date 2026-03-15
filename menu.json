@@ -10,41 +10,44 @@
   },
 
   "restaurant": {
-    "name":    "Adıyaman Pide Lahmacun Kebap ve Döner Salonu",
-    "tagline": "Lezzetimizin Sırrı: İçine Kattığımız Bir Tutam Sevgi.",
-    "phone":   "0212 475 47 64",
-    "address": "50. Yıl Mahallsi, I Caddesi No: 112/B, Sultangazi/İstanbul"
+    "name":    "Adıyaman Pide",
+    "tagline": "Ustanın Elinden, Toprağın Özünden",
+    "phone":   "0416 XXX XX XX",
+    "address": "Adıyaman Merkez"
   },
 
   "announcements": [
-    "🔥 Bugün taze kuzu dana ile hazırladık!",
-    "⭐ Haftanın önerisi: Adıyaman Special — mutlaka deneyin!"
+    "🔥 Bugün taze kuzu eti ile hazırladık — doğrudan çiftlikten!",
+    "🌿 Tüm pidelerimiz taş fırında, odun ateşinde pişirilmektedir.",
+    "⭐ Haftanın önerisi: Adıyaman Special — mutlaka deneyin!",
+    "🎉 10 ve üzeri siparişlerde ücretsiz servis imkânı mevcuttur."
   ],
 
-  "ownerNote": "Sevgili misafirlerimiz, her lokmada emek ve sevgi var. Afiyet olsun! — Siraç Usta",
+  "ownerNote": "Sevgili misafirlerimiz, her lokmada emek ve sevgi var. Afiyet olsun! — Usta Mehmet",
 
   "categories": [
 
     {
       "id": "pideler",
       "name": "Pidelerimiz",
-      "icon": "",
-     "items": [
-  { "id": 1,  "name": "Kıymalı Pide",            "description": "", "price": 280, "image": "images/sade-kiymali-pide.jpg",   "badge": "En Çok Satan" },
-  { "id": 2,  "name": "Kıyma Kaşarlı Pide",      "description": "", "price": 290, "image": "images/kiymali-kasarli-pide.jpg", "badge": null },
-  { "id": 3,  "name": "Kaşarlı Pide",            "description": "", "price": 280, "image": "images/sade-kasarli-pide.jpg",   "badge": null },
-  { "id": 4,  "name": "Kuşbaşılı Pide",          "description": "", "price": 320, "image": "images/sade-kusbasili-pide.jpg",  "badge": "Şef Önerisi" },
-  { "id": 5,  "name": "Kuşbaşı Kaşarlı Pide",    "description": "", "price": 330, "image": "images/kusbasi-kasarli-pide.jpg", "badge": null },
-  { "id": 6,  "name": "Sucuklu Pide",            "description": "", "price": 290, "image": "images/sade-sucuklu-pide.jpg",    "badge": null },
-  { "id": 7,  "name": "Sucuk Kaşarlı Pide",      "description": "", "price": 300, "image": "images/sucuklu-kasarli-pide.jpg", "badge": null },
-  { "id": 8,  "name": "Kavurmalı Pide",          "description": "", "price": 340, "image": "images/sade-kavurmali-pide.jpg",  "badge": null },
-  { "id": 9,  "name": "Kavurma Kaşarlı Pide",    "description": "", "price": 350, "image": "images/kavurma-kasarli-pide.jpg", "badge": null },
-  { "id": 10, "name": "Mantar Kaşarlı Pide",     "description": "", "price": 290, "image": "images/kasarli-mantarli-pide.jpg", "badge": null },
-  { "id": 11, "name": "Kavurma Kaşar Mantar Pide", "description": "", "price": 350, "image": "images/logo.png",                "badge": "Yeni" },
-  { "id": 12, "name": "Karışık Pide",            "description": "", "price": 320, "image": "images/karisik-pide.jpg",       "badge": null },
-  { "id": 13, "name": "Sebzeli Pide",            "description": "", "price": 300, "image": "images/logo.png",                "badge": null },
-  { "id": 14, "name": "Adıyaman Special",        "description": "", "price": 340, "image": "images/logo.png",                "badge": "Şef Önerisi" }
-]
+      "icon": "🫓",
+      "items": [
+        { "id": 1,  "name": "Kıymalı Pide",              "description": "İnce çekilmiş dana kıyması, soğan, maydanoz ve özel baharatlarla.",        "price": 280, "image": "images/sade-kiymali-pide.jpg",          "badge": "En Çok Satan"   },
+        { "id": 2,  "name": "Kıyma Kaşarlı Pide",        "description": "Dana kıyması ve erimiş kaşar peynirinin birlikteliği.",                     "price": 290, "image": "images/kiymali-kasarli-pide.jpg",       "badge": null             },
+        { "id": 3,  "name": "Kaşarlı Pide",               "description": "Bol erimiş kaşar, taze domates ve sivri biber ile çıtır hamur üzerinde.",   "price": 280, "image": "images/sade-kasarli-pide.jpg",          "badge": null             },
+        { "id": 4,  "name": "Kuşbaşılı Pide",             "description": "Taze kuzu kuşbaşı, biber, domates ve sarımsaklı tereyağı ile.",              "price": 320, "image": "images/sade-kusbasili-pide.jpg",        "badge": "Şef Önerisi"    },
+        { "id": 5,  "name": "Kuşbaşı Kaşarlı Pide",      "description": "Kuşbaşı etin kaşar ile taçlandırılmış hali.",                               "price": 330, "image": "images/kusbasi-kasarli-pide.jpg",       "badge": null             },
+        { "id": 6,  "name": "Sucuklu Pide",               "description": "Kıbrıs sucuğu ve taze yeşilliklerle.",                                      "price": 290, "image": "images/sade-sucuklu-pide.jpg",           "badge": null             },
+        { "id": 7,  "name": "Sucuk Kaşarlı Pide",         "description": "Sucuk ve kaşarın sıcak fırından çıkma uyumu.",                              "price": 300, "image": "images/sucuklu-kasarli-pide.jpg",       "badge": null             },
+        { "id": 8,  "name": "Kavurmalı Pide",             "description": "Özel kavurma eti ile hazırlanmış doyurucu pide.",                            "price": 340, "image": "images/sade-kavurmali-pide.jpg",        "badge": null             },
+        { "id": 9,  "name": "Kavurma Kaşarlı Pide",       "description": "Kavurma eti ve kaşarın taş fırında buluşması.",                              "price": 350, "image": "images/kavurma-kasarli-pide.jpg",       "badge": null             },
+        { "id": 10, "name": "Mantar Kaşarlı Pide",        "description": "Taze mantar ve eritilmiş kaşar peyniri ile.",                                "price": 290, "image": "images/kasarli-mantarli-pide.jpg",      "badge": null             },
+        { "id": 11, "name": "Kavurma Kaşar Mantar Pide",  "description": "Kavurma, kaşar ve mantarın üçlü lezzet şöleni.",                             "price": 350, "image": "images/logo.png",                       "badge": "Yeni"           },
+        { "id": 12, "name": "Karışık Pide",               "description": "Kıyma, kaşar, sucuk ve yumurtanın muhteşem birlikteliği.",                   "price": 320, "image": "images/karisik-pide.jpg",              "badge": null             },
+        { "id": 13, "name": "Sebzeli Pide",               "description": "Taze mevsim sebzeleri ile hazırlanmış hafif ve lezzetli pide.",               "price": 300, "image": "images/logo.png",                       "badge": null             },
+        { "id": 14, "name": "Adıyaman Special",           "description": "Ustamızın özel karışım harcıyla hazırlanan imza pidesi.",                    "price": 340, "image": "images/logo.png",                       "badge": "Şef Önerisi"    }
+      ]
+    },
 
     {
       "id": "lahmacun",
