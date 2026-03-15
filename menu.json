@@ -1,12 +1,12 @@
 {
 
   "_REHBER": {
-    "_aciklama":       "Bu '_REHBER' bloğu siteye yansımaz. Sadece veri alanlarını değiştirin.",
-    "_restaurant":     "name=başlık  tagline=slogan  phone=telefon  address=adres",
-    "_announcements":  "Siyah şeritte dönen mesajlar. Dizi [] içinde tırnaklı metinler. Emoji ekleyebilirsiniz: 🔥 🌿 ⭐ 🎉",
-    "_ownerNote":      "Altın şeritteki usta notu. Göstermek istemiyorsanız boş bırakın: \"\"",
-    "_urun_alanlari":  "id=sırano  name=ad  description=açıklama  price=fiyat(rakam)  image=images/dosya.jpg  badge=rozet",
-    "_badge_secenekler": "'En Çok Satan' | 'Şef Önerisi' | 'Yeni' | 'Geleneksel' | 'Büyük Porsiyon' | null"
+    "_aciklama":        "Bu '_REHBER' bloğu siteye yansımaz. Sadece veri alanlarını değiştirin.",
+    "_restaurant":      "name=başlık  tagline=slogan  phone=telefon  address=adres",
+    "_announcements":   "Siyah şeritte dönen mesajlar dizisi. Emoji kullanabilirsiniz: 🔥 🌿 ⭐ 🎉",
+    "_ownerNote":       "Altın şeritteki usta notu. Göstermek istemiyorsanız boş bırakın: \"\"",
+    "_badge_secenekler":"'En Çok Satan' | 'Şef Önerisi' | 'Yeni' | 'Geleneksel' | 'Büyük Porsiyon' | null",
+    "_image_aciklama":  "Görseller images/ klasöründe. Fotoğrafı olmayanlar images/logo.png gösterir."
   },
 
   "restaurant": {
@@ -28,134 +28,148 @@
   "categories": [
 
     {
-      "id": "pideler", "name": "Pidelerimiz", "icon": "🫓",
+      "id": "pideler",
+      "name": "Pidelerimiz",
+      "icon": "🫓",
       "items": [
-        { "id": 1,  "name": "Kıymalı Pide",              "description": "İnce çekilmiş dana kıyması, soğan, maydanoz ve özel baharatlarla.",         "price": 280, "image": "images/kiymali-pide.jpg",               "badge": "En Çok Satan"   },
-        { "id": 2,  "name": "Kıyma Kaşarlı Pide",        "description": "Dana kıyması ve erimiş kaşar peynirinin birlikteliği.",                      "price": 290, "image": "images/kiyma-kasar-pide.jpg",          "badge": null             },
-        { "id": 3,  "name": "Kaşarlı Pide",               "description": "Bol erimiş kaşar, taze domates ve sivri biber ile çıtır hamur üzerinde.",    "price": 280, "image": "images/kasarli-pide.jpg",              "badge": null             },
-        { "id": 4,  "name": "Kuşbaşılı Pide",             "description": "Taze kuzu kuşbaşı, biber, domates ve sarımsaklı tereyağı ile.",               "price": 320, "image": "images/kusbasi-pide.jpg",             "badge": "Şef Önerisi"    },
-        { "id": 5,  "name": "Kuşbaşı Kaşarlı Pide",      "description": "Kuşbaşı etin kaşar ile taçlandırılmış hali.",                                "price": 330, "image": "images/kusbasi-kasar-pide.jpg",       "badge": null             },
-        { "id": 6,  "name": "Sucuklu Pide",               "description": "Kıbrıs sucuğu ve taze yeşilliklerle.",                                       "price": 290, "image": "images/sucuklu-pide.jpg",             "badge": null             },
-        { "id": 7,  "name": "Sucuk Kaşarlı Pide",         "description": "Sucuk ve kaşarın sıcak fırından çıkma uyumu.",                               "price": 300, "image": "images/sucuk-kasar-pide.jpg",         "badge": null             },
-        { "id": 8,  "name": "Kavurmalı Pide",             "description": "Özel kavurma eti ile hazırlanmış doyurucu pide.",                             "price": 340, "image": "images/kavurmali-pide.jpg",           "badge": null             },
-        { "id": 9,  "name": "Kavurma Kaşarlı Pide",       "description": "Kavurma eti ve kaşarın taş fırında buluşması.",                               "price": 350, "image": "images/kavurma-kasar-pide.jpg",       "badge": null             },
-        { "id": 10, "name": "Mantar Kaşarlı Pide",        "description": "Taze mantar ve eritilmiş kaşar peyniri ile.",                                 "price": 290, "image": "images/mantar-kasar-pide.jpg",        "badge": null             },
-        { "id": 11, "name": "Kavurma Kaşar Mantar Pide",  "description": "Kavurma, kaşar ve mantarın üçlü lezzet şöleni.",                              "price": 350, "image": "images/kavurma-kasar-mantar-pide.jpg","badge": "Yeni"           },
-        { "id": 12, "name": "Karışık Pide",               "description": "Kıyma, kaşar, sucuk ve yumurtanın muhteşem birlikteliği.",                    "price": 320, "image": "images/karisik-pide.jpg",            "badge": null             },
-        { "id": 13, "name": "Sebzeli Pide",               "description": "Taze mevsim sebzeleri ile hazırlanmış hafif ve lezzetli pide.",                "price": 300, "image": "images/sebzeli-pide.jpg",             "badge": null             },
-        { "id": 14, "name": "Adıyaman Special",           "description": "Ustamızın özel karışım harcıyla hazırlanan imza pidesi.",                     "price": 340, "image": "images/adiyaman-special.jpg",         "badge": "Şef Önerisi"    }
+        { "id": 1,  "name": "Kıymalı Pide",              "description": "İnce çekilmiş dana kıyması, soğan, maydanoz ve özel baharatlarla.",        "price": 280, "image": "images/sade-kiymali-pide.jpg",          "badge": "En Çok Satan"   },
+        { "id": 2,  "name": "Kıyma Kaşarlı Pide",        "description": "Dana kıyması ve erimiş kaşar peynirinin birlikteliği.",                     "price": 290, "image": "images/kiymali-kasarli-pide.jpg",       "badge": null             },
+        { "id": 3,  "name": "Kaşarlı Pide",               "description": "Bol erimiş kaşar, taze domates ve sivri biber ile çıtır hamur üzerinde.",   "price": 280, "image": "images/sade-kasarli-pide.jpg",          "badge": null             },
+        { "id": 4,  "name": "Kuşbaşılı Pide",             "description": "Taze kuzu kuşbaşı, biber, domates ve sarımsaklı tereyağı ile.",              "price": 320, "image": "images/sade-kusbasili-pide.jpg",        "badge": "Şef Önerisi"    },
+        { "id": 5,  "name": "Kuşbaşı Kaşarlı Pide",      "description": "Kuşbaşı etin kaşar ile taçlandırılmış hali.",                               "price": 330, "image": "images/kusbasi-kasarli-pide.jpg",       "badge": null             },
+        { "id": 6,  "name": "Sucuklu Pide",               "description": "Kıbrıs sucuğu ve taze yeşilliklerle.",                                      "price": 290, "image": "images/sade-sucuklu-pide.jpg",           "badge": null             },
+        { "id": 7,  "name": "Sucuk Kaşarlı Pide",         "description": "Sucuk ve kaşarın sıcak fırından çıkma uyumu.",                              "price": 300, "image": "images/sucuklu-kasarli-pide.jpg",       "badge": null             },
+        { "id": 8,  "name": "Kavurmalı Pide",             "description": "Özel kavurma eti ile hazırlanmış doyurucu pide.",                            "price": 340, "image": "images/sade-kavurmali-pide.jpg",        "badge": null             },
+        { "id": 9,  "name": "Kavurma Kaşarlı Pide",       "description": "Kavurma eti ve kaşarın taş fırında buluşması.",                              "price": 350, "image": "images/kavurma-kasarli-pide.jpg",       "badge": null             },
+        { "id": 10, "name": "Mantar Kaşarlı Pide",        "description": "Taze mantar ve eritilmiş kaşar peyniri ile.",                                "price": 290, "image": "images/kasarli-mantarli-pide.jpg",      "badge": null             },
+        { "id": 11, "name": "Kavurma Kaşar Mantar Pide",  "description": "Kavurma, kaşar ve mantarın üçlü lezzet şöleni.",                             "price": 350, "image": "images/logo.png",                       "badge": "Yeni"           },
+        { "id": 12, "name": "Karışık Pide",               "description": "Kıyma, kaşar, sucuk ve yumurtanın muhteşem birlikteliği.",                   "price": 320, "image": "images/karisik-pide.jpg",              "badge": null             },
+        { "id": 13, "name": "Sebzeli Pide",               "description": "Taze mevsim sebzeleri ile hazırlanmış hafif ve lezzetli pide.",               "price": 300, "image": "images/logo.png",                       "badge": null             },
+        { "id": 14, "name": "Adıyaman Special",           "description": "Ustamızın özel karışım harcıyla hazırlanan imza pidesi.",                    "price": 340, "image": "images/logo.png",                       "badge": "Şef Önerisi"    }
       ]
     },
 
     {
-      "id": "lahmacun", "name": "Lahmacun", "icon": "🌮",
+      "id": "lahmacun",
+      "name": "Lahmacun",
+      "icon": "🌮",
       "items": [
-        { "id": 15, "name": "Lahmacun",                   "description": "İnce hamur üzerinde özel baharatlı kıyma harcı.",                            "price": 90,  "image": "images/lahmacun.jpg",                  "badge": "Geleneksel"     },
-        { "id": 16, "name": "Küçük Lahmacun",             "description": "Klasik lahmacunumuzun küçük boy versiyonu.",                                 "price": 70,  "image": "images/kucuk-lahmacun.jpg",            "badge": null             },
-        { "id": 17, "name": "Kaşarlı Lahmacun",           "description": "Üzerine erimiş kaşar peyniri eklenmiş özel lahmacun.",                       "price": 110, "image": "images/kasarli-lahmacun.jpg",          "badge": null             },
-        { "id": 18, "name": "Soğansız Lahmacun",          "description": "Soğan sevmeyenler için özel hazırlanan lahmacun.",                           "price": 110, "image": "images/sogansiz-lahmacun.jpg",         "badge": null             },
-        { "id": 19, "name": "Malatya Lahmacun",           "description": "Malatya usulü yoğun baharatlı ve kendine özgü harçlı lahmacun.",              "price": 180, "image": "images/malatya-lahmacun.jpg",          "badge": null             },
-        { "id": 20, "name": "Malatya Kaşarlı Lahmacun",  "description": "Malatya usulü lahmacunun üzerine eritilmiş kaşar ile.",                      "price": 200, "image": "images/malatya-kasarli-lahmacun.jpg",  "badge": null             }
+        { "id": 15, "name": "Lahmacun",                   "description": "İnce hamur üzerinde özel baharatlı kıyma harcı.",                           "price": 90,  "image": "images/lahmacun.jpg",                   "badge": "Geleneksel"     },
+        { "id": 16, "name": "Küçük Lahmacun",             "description": "Klasik lahmacunumuzun küçük boy versiyonu.",                                "price": 70,  "image": "images/kucuk-lahmacun.jpg",             "badge": null             },
+        { "id": 17, "name": "Kaşarlı Lahmacun",           "description": "Üzerine erimiş kaşar peyniri eklenmiş özel lahmacun.",                      "price": 110, "image": "images/kasarli-lahmacun.jpg",           "badge": null             },
+        { "id": 18, "name": "Soğansız Lahmacun",          "description": "Soğan sevmeyenler için özel hazırlanan lahmacun.",                          "price": 110, "image": "images/logo.png",                       "badge": null             },
+        { "id": 19, "name": "Malatya Lahmacun",           "description": "Malatya usulü yoğun baharatlı ve kendine özgü harçlı lahmacun.",             "price": 180, "image": "images/malatya-lahmacun.jpg",           "badge": null             },
+        { "id": 20, "name": "Malatya Kaşarlı Lahmacun",  "description": "Malatya usulü lahmacunun üzerine eritilmiş kaşar ile.",                     "price": 200, "image": "images/logo.png",                       "badge": null             }
       ]
     },
 
     {
-      "id": "doner", "name": "Döner", "icon": "🥙",
+      "id": "doner",
+      "name": "Döner",
+      "icon": "🥙",
       "items": [
-        { "id": 21, "name": "Pilav Üstü Döner",           "description": "Tereyağlı pirinç pilavı üzerine ince dilimlenmiş döner.",                     "price": 230, "image": "images/pilav-ustu-doner.jpg",          "badge": "En Çok Satan"   },
-        { "id": 22, "name": "Porsiyon Döner",             "description": "Tabak servis, yanında salata ve ekmek ile.",                                   "price": 230, "image": "images/porsiyon-doner.jpg",            "badge": null             },
-        { "id": 23, "name": "Sade Tavuk Döner",           "description": "Tavuk göğsünden hazırlanan hafif ve lezzetli döner.",                          "price": 125, "image": "images/sade-tavuk-doner.jpg",          "badge": null             },
-        { "id": 24, "name": "Lavaş Döner",                "description": "İnce lavaş ekmeğinde döner dürüm.",                                           "price": 140, "image": "images/lavas-doner.jpg",               "badge": null             },
-        { "id": 25, "name": "Lavaş Kaşarlı Döner",       "description": "Lavaş dürüm üzerine eritilmiş kaşar ile.",                                    "price": 160, "image": "images/lavas-kasarli-doner.jpg",       "badge": null             },
-        { "id": 26, "name": "Fırın Döner",                "description": "Fırında pişirilmiş özel döner.",                                               "price": 160, "image": "images/firin-doner.jpg",               "badge": null             },
-        { "id": 27, "name": "Yarım Ekmek Döner",          "description": "Yarım somun ekmek içinde döner.",                                              "price": 80,  "image": "images/yarim-ekmek-doner.jpg",         "badge": null             },
-        { "id": 28, "name": "Tam Ekmek Döner",            "description": "Tam somun ekmek içinde döner — doyurucu porsiyon.",                           "price": 160, "image": "images/tam-ekmek-doner.jpg",           "badge": null             },
-        { "id": 29, "name": "Tombik Döner",               "description": "Yuvarlak küçük ekmekte döner.",                                                "price": 80,  "image": "images/tombik-doner.jpg",              "badge": null             },
-        { "id": 30, "name": "Tombik Kaşarlı Döner",      "description": "Yuvarlak ekmekte kaşarlı döner.",                                              "price": 100, "image": "images/tombik-kasar-doner.jpg",        "badge": null             },
-        { "id": 31, "name": "Tırnaklı Tavuk Dürüm",      "description": "Tavuk döner, tırnaklı lavaşa sarılmış dürüm.",                                 "price": 140, "image": "images/tirnakli-tavuk-durum.jpg",      "badge": null             }
+        { "id": 21, "name": "Pilav Üstü Döner",           "description": "Tereyağlı pirinç pilavı üzerine ince dilimlenmiş döner.",                   "price": 230, "image": "images/pilavustu-doner.jpg",            "badge": "En Çok Satan"   },
+        { "id": 22, "name": "Porsiyon Döner",             "description": "Tabak servis, yanında salata ve ekmek ile.",                                 "price": 230, "image": "images/porsiyon-doner.jpg",             "badge": null             },
+        { "id": 23, "name": "Sade Tavuk Döner",           "description": "Tavuk göğsünden hazırlanan hafif ve lezzetli döner.",                        "price": 125, "image": "images/logo.png",                       "badge": null             },
+        { "id": 24, "name": "Lavaş Döner",                "description": "İnce lavaş ekmeğinde döner dürüm.",                                         "price": 140, "image": "images/durum-doner.jpg",                "badge": null             },
+        { "id": 25, "name": "Lavaş Kaşarlı Döner",       "description": "Lavaş dürüm üzerine eritilmiş kaşar ile.",                                  "price": 160, "image": "images/durum-doner.jpg",                "badge": null             },
+        { "id": 26, "name": "Fırın Döner",                "description": "Fırında pişirilmiş özel döner.",                                             "price": 160, "image": "images/logo.png",                       "badge": null             },
+        { "id": 27, "name": "Yarım Ekmek Döner",          "description": "Yarım somun ekmek içinde döner.",                                            "price": 80,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 28, "name": "Tam Ekmek Döner",            "description": "Tam somun ekmek içinde döner — doyurucu porsiyon.",                         "price": 160, "image": "images/logo.png",                       "badge": null             },
+        { "id": 29, "name": "Tombik Döner",               "description": "Yuvarlak küçük ekmekte döner.",                                              "price": 80,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 30, "name": "Tombik Kaşarlı Döner",      "description": "Yuvarlak ekmekte kaşarlı döner.",                                            "price": 100, "image": "images/logo.png",                       "badge": null             },
+        { "id": 31, "name": "Tırnaklı Tavuk Dürüm",      "description": "Tavuk döner, tırnaklı lavaşa sarılmış dürüm.",                               "price": 140, "image": "images/durum-doner.jpg",                "badge": null             }
       ]
     },
 
     {
-      "id": "kebap", "name": "Kebap", "icon": "🍢",
+      "id": "kebap",
+      "name": "Kebap",
+      "icon": "🍢",
       "items": [
-        { "id": 32, "name": "Adana",                       "description": "Acılı kıyma kebabı, közlenmiş biber ve domates ile.",                         "price": 330, "image": "images/adana.jpg",                     "badge": null             },
-        { "id": 33, "name": "Adana Dürüm",                "description": "Adana kebabının lavaşa sarılmış dürüm hali.",                                 "price": 220, "image": "images/adana-durum.jpg",               "badge": null             },
-        { "id": 34, "name": "Adana Kaşarlı Fırın Dürüm", "description": "Fırında pişirilmiş kaşarlı Adana dürüm.",                                     "price": 260, "image": "images/adana-kasar-firin-durum.jpg",   "badge": null             },
-        { "id": 35, "name": "Urfa",                        "description": "Acısız kıyma kebabı, közlenmiş sebzeler ile.",                                "price": 330, "image": "images/urfa.jpg",                      "badge": null             },
-        { "id": 36, "name": "Urfa Dürüm",                 "description": "Urfa kebabının lavaşa sarılmış dürüm hali.",                                  "price": 220, "image": "images/urfa-durum.jpg",                "badge": null             },
-        { "id": 37, "name": "Urfa Kaşarlı Fırın Dürüm",  "description": "Fırında pişirilmiş kaşarlı Urfa dürüm.",                                      "price": 260, "image": "images/urfa-kasar-firin-durum.jpg",    "badge": null             },
-        { "id": 38, "name": "Tavuk Şiş",                  "description": "Marineli tavuk parçaları şişte közlenmiş.",                                    "price": 320, "image": "images/tavuk-sis.jpg",                 "badge": null             },
-        { "id": 39, "name": "Tavuk Şiş Dürüm",           "description": "Tavuk şişin lavaşa sarılmış dürüm hali.",                                     "price": 210, "image": "images/tavuk-sis-durum.jpg",           "badge": null             },
-        { "id": 40, "name": "Kanat",                       "description": "Izgara tavuk kanadı, baharatlı marinasyonla.",                                "price": 320, "image": "images/kanat.jpg",                     "badge": null             },
-        { "id": 41, "name": "Et Şiş",                     "description": "Dana kuşbaşı etler şişte közlenmiş, yanında sebze ile.",                      "price": 350, "image": "images/et-sis.jpg",                    "badge": null             },
-        { "id": 42, "name": "Et Şiş Dürüm",              "description": "Et şişin lavaşa sarılmış dürüm hali.",                                        "price": 250, "image": "images/et-sis-durum.jpg",              "badge": null             },
-        { "id": 43, "name": "Ciğer Şiş",                  "description": "Kuzu ciğeri şişte közlenmiş, Adıyaman usulü.",                                "price": 350, "image": "images/ciger-sis.jpg",                 "badge": "Geleneksel"     },
-        { "id": 44, "name": "Ciğer Şiş Dürüm",           "description": "Ciğer şişin lavaşa sarılmış dürüm hali.",                                     "price": 250, "image": "images/ciger-sis-durum.jpg",           "badge": null             },
-        { "id": 45, "name": "Çöp Şiş",                    "description": "İnce doğranmış dana eti küçük şişlerde közlenmiş.",                           "price": 340, "image": "images/cop-sis.jpg",                   "badge": null             },
-        { "id": 46, "name": "Çöp Şiş Dürüm",             "description": "Çöp şişin lavaşa sarılmış dürüm hali.",                                       "price": 250, "image": "images/cop-sis-durum.jpg",             "badge": null             },
-        { "id": 47, "name": "Beyti Sarma",                "description": "Kıyma kebabının lavaşa sarılıp fırınlandığı klasik kebap.",                   "price": 340, "image": "images/beyti-sarma.jpg",               "badge": null             },
-        { "id": 48, "name": "Kasap Köfte",                "description": "El yapımı ızgara köfte, yanında közlenmiş domates ile.",                      "price": 340, "image": "images/kasap-kofte.jpg",               "badge": null             },
-        { "id": 49, "name": "Domatesli Kebap",            "description": "Közlenmiş domates soslu özel kebap.",                                          "price": 350, "image": "images/domatesli-kebap.jpg",           "badge": null             },
-        { "id": 50, "name": "Patlıcanlı Kebap",           "description": "Közlenmiş patlıcan ile hazırlanan geleneksel kebap.",                         "price": 350, "image": "images/patlicanli-kebap.jpg",          "badge": null             },
-        { "id": 51, "name": "Ali Nazik Şişten",           "description": "Közlenmiş patlıcan ezmesi üzerine şiş kebap — Güneydoğu klasiği.",            "price": 350, "image": "images/ali-nazik.jpg",                 "badge": "Şef Önerisi"    },
-        { "id": 52, "name": "Altı Ezme Kebap",            "description": "Özel ezme sosu üzerine servis edilen kebap.",                                  "price": 350, "image": "images/alti-ezme-kebap.jpg",           "badge": null             },
-        { "id": 53, "name": "Karışık Kebap",              "description": "Adana, urfa, tavuk şiş ve et şiş bir arada — kafile için ideal.",             "price": 800, "image": "images/karisik-kebap.jpg",            "badge": "Büyük Porsiyon" }
+        { "id": 32, "name": "Adana",                       "description": "Acılı kıyma kebabı, közlenmiş biber ve domates ile.",                       "price": 330, "image": "images/logo.png",                       "badge": null             },
+        { "id": 33, "name": "Adana Dürüm",                "description": "Adana kebabının lavaşa sarılmış dürüm hali.",                               "price": 220, "image": "images/logo.png",                       "badge": null             },
+        { "id": 34, "name": "Adana Kaşarlı Fırın Dürüm", "description": "Fırında pişirilmiş kaşarlı Adana dürüm.",                                   "price": 260, "image": "images/logo.png",                       "badge": null             },
+        { "id": 35, "name": "Urfa",                        "description": "Acısız kıyma kebabı, közlenmiş sebzeler ile.",                              "price": 330, "image": "images/logo.png",                       "badge": null             },
+        { "id": 36, "name": "Urfa Dürüm",                 "description": "Urfa kebabının lavaşa sarılmış dürüm hali.",                                "price": 220, "image": "images/logo.png",                       "badge": null             },
+        { "id": 37, "name": "Urfa Kaşarlı Fırın Dürüm",  "description": "Fırında pişirilmiş kaşarlı Urfa dürüm.",                                    "price": 260, "image": "images/logo.png",                       "badge": null             },
+        { "id": 38, "name": "Tavuk Şiş",                  "description": "Marineli tavuk parçaları şişte közlenmiş.",                                  "price": 320, "image": "images/logo.png",                       "badge": null             },
+        { "id": 39, "name": "Tavuk Şiş Dürüm",           "description": "Tavuk şişin lavaşa sarılmış dürüm hali.",                                   "price": 210, "image": "images/logo.png",                       "badge": null             },
+        { "id": 40, "name": "Kanat",                       "description": "Izgara tavuk kanadı, baharatlı marinasyonla.",                              "price": 320, "image": "images/logo.png",                       "badge": null             },
+        { "id": 41, "name": "Et Şiş",                     "description": "Dana kuşbaşı etler şişte közlenmiş, yanında sebze ile.",                    "price": 350, "image": "images/logo.png",                       "badge": null             },
+        { "id": 42, "name": "Et Şiş Dürüm",              "description": "Et şişin lavaşa sarılmış dürüm hali.",                                      "price": 250, "image": "images/logo.png",                       "badge": null             },
+        { "id": 43, "name": "Ciğer Şiş",                  "description": "Kuzu ciğeri şişte közlenmiş, Adıyaman usulü.",                              "price": 350, "image": "images/logo.png",                       "badge": "Geleneksel"     },
+        { "id": 44, "name": "Ciğer Şiş Dürüm",           "description": "Ciğer şişin lavaşa sarılmış dürüm hali.",                                   "price": 250, "image": "images/logo.png",                       "badge": null             },
+        { "id": 45, "name": "Çöp Şiş",                    "description": "İnce doğranmış dana eti küçük şişlerde közlenmiş.",                         "price": 340, "image": "images/logo.png",                       "badge": null             },
+        { "id": 46, "name": "Çöp Şiş Dürüm",             "description": "Çöp şişin lavaşa sarılmış dürüm hali.",                                     "price": 250, "image": "images/logo.png",                       "badge": null             },
+        { "id": 47, "name": "Beyti Sarma",                "description": "Kıyma kebabının lavaşa sarılıp fırınlandığı klasik kebap.",                 "price": 340, "image": "images/logo.png",                       "badge": null             },
+        { "id": 48, "name": "Kasap Köfte",                "description": "El yapımı ızgara köfte, yanında közlenmiş domates ile.",                    "price": 340, "image": "images/logo.png",                       "badge": null             },
+        { "id": 49, "name": "Domatesli Kebap",            "description": "Közlenmiş domates soslu özel kebap.",                                        "price": 350, "image": "images/logo.png",                       "badge": null             },
+        { "id": 50, "name": "Patlıcanlı Kebap",           "description": "Közlenmiş patlıcan ile hazırlanan geleneksel kebap.",                       "price": 350, "image": "images/logo.png",                       "badge": null             },
+        { "id": 51, "name": "Ali Nazik Şişten",           "description": "Közlenmiş patlıcan ezmesi üzerine şiş kebap — Güneydoğu klasiği.",          "price": 350, "image": "images/logo.png",                       "badge": "Şef Önerisi"    },
+        { "id": 52, "name": "Altı Ezme Kebap",            "description": "Özel ezme sosu üzerine servis edilen kebap.",                                "price": 350, "image": "images/logo.png",                       "badge": null             },
+        { "id": 53, "name": "Karışık Kebap",              "description": "Adana, urfa, tavuk şiş ve et şiş bir arada — kafile için ideal.",           "price": 800, "image": "images/logo.png",                       "badge": "Büyük Porsiyon" }
       ]
     },
 
     {
-      "id": "corba", "name": "Çorba", "icon": "🍲",
+      "id": "corba",
+      "name": "Çorba",
+      "icon": "🍲",
       "items": [
-        { "id": 54, "name": "Çorba",                      "description": "Günlük taze hazırlanan ev usulü çorba.",                                       "price": 80,  "image": "images/corba.jpg",                     "badge": null             }
+        { "id": 54, "name": "Çorba",                      "description": "Günlük taze hazırlanan ev usulü çorba.",                                     "price": 80,  "image": "images/logo.png",                       "badge": null             }
       ]
     },
 
     {
-      "id": "yanlar", "name": "Yanlar", "icon": "🫙",
+      "id": "yanlar",
+      "name": "Yanlar",
+      "icon": "🫙",
       "items": [
-        { "id": 55, "name": "Yağlı",                      "description": "Tereyağlı ince hamur — sade.",                                                 "price": 16,  "image": "images/yagli.jpg",                     "badge": null             },
-        { "id": 56, "name": "Kaşarlı Yağlı",             "description": "Tereyağlı hamur üzerine eritilmiş kaşar.",                                     "price": 20,  "image": "images/kasarli-yagli.jpg",             "badge": null             },
-        { "id": 57, "name": "Kıymalı Yağlı",             "description": "Tereyağlı hamur üzerine kıymalı harç.",                                        "price": 20,  "image": "images/kiymali-yagli.jpg",             "badge": null             },
-        { "id": 58, "name": "Kavurmalı Yağlı",           "description": "Kavurma etli tereyağlı hamur.",                                                 "price": 25,  "image": "images/kavurmali-yagli.jpg",           "badge": null             },
-        { "id": 59, "name": "Kavurma Kaşarlı Yağlı",    "description": "Kavurma ve kaşarlı tereyağlı hamur.",                                           "price": 30,  "image": "images/kavurma-kasar-yagli.jpg",       "badge": null             },
-        { "id": 60, "name": "Ekmek",                      "description": "Taze fırın ekmeği.",                                                            "price": 15,  "image": "images/ekmek.jpg",                     "badge": null             },
-        { "id": 61, "name": "Lavaş",                      "description": "İnce açılmış taze lavaş.",                                                     "price": 15,  "image": "images/lavas.jpg",                     "badge": null             },
-        { "id": 62, "name": "Tombik",                     "description": "Yuvarlak küçük fırın ekmeği.",                                                  "price": 13,  "image": "images/tombik.jpg",                    "badge": null             },
-        { "id": 63, "name": "Salata",                     "description": "Mevsim yeşillikleri ile taze salata.",                                          "price": 20,  "image": "images/salata.jpg",                    "badge": null             },
-        { "id": 64, "name": "Ezme",                       "description": "Acılı domates ezme sosu.",                                                      "price": 20,  "image": "images/ezme.jpg",                      "badge": null             },
-        { "id": 65, "name": "Yoğurt Ezmesi",             "description": "Sarımsaklı yoğurt ezmesi.",                                                     "price": 20,  "image": "images/yogurt-ezmesi.jpg",             "badge": null             },
-        { "id": 66, "name": "Çoban Salata",              "description": "Domates, salatalık, soğan ve maydanozlu çoban salatası.",                       "price": 30,  "image": "images/coban-salata.jpg",              "badge": null             },
-        { "id": 67, "name": "Soğan Salatası",            "description": "Sumak ve maydanozlu soğan salatası.",                                           "price": 10,  "image": "images/sogan-salatasi.jpg",            "badge": null             },
-        { "id": 68, "name": "Biber",                      "description": "Acı veya tatlı fırın biber.",                                                   "price": 8,   "image": "images/biber.jpg",                     "badge": null             }
+        { "id": 55, "name": "Yağlı",                      "description": "Tereyağlı ince hamur — sade.",                                               "price": 16,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 56, "name": "Kaşarlı Yağlı",             "description": "Tereyağlı hamur üzerine eritilmiş kaşar.",                                   "price": 20,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 57, "name": "Kıymalı Yağlı",             "description": "Tereyağlı hamur üzerine kıymalı harç.",                                      "price": 20,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 58, "name": "Kavurmalı Yağlı",           "description": "Kavurma etli tereyağlı hamur.",                                               "price": 25,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 59, "name": "Kavurma Kaşarlı Yağlı",    "description": "Kavurma ve kaşarlı tereyağlı hamur.",                                         "price": 30,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 60, "name": "Ekmek",                      "description": "Taze fırın ekmeği.",                                                          "price": 15,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 61, "name": "Lavaş",                      "description": "İnce açılmış taze lavaş.",                                                   "price": 15,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 62, "name": "Tombik",                     "description": "Yuvarlak küçük fırın ekmeği.",                                                "price": 13,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 63, "name": "Salata",                     "description": "Mevsim yeşillikleri ile taze salata.",                                        "price": 20,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 64, "name": "Ezme",                       "description": "Acılı domates ezme sosu.",                                                    "price": 20,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 65, "name": "Yoğurt Ezmesi",             "description": "Sarımsaklı yoğurt ezmesi.",                                                   "price": 20,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 66, "name": "Çoban Salata",              "description": "Domates, salatalık, soğan ve maydanozlu çoban salatası.",                     "price": 30,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 67, "name": "Soğan Salatası",            "description": "Sumak ve maydanozlu soğan salatası.",                                         "price": 10,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 68, "name": "Biber",                      "description": "Acı veya tatlı fırın biber.",                                                 "price": 8,   "image": "images/logo.png",                       "badge": null             }
       ]
     },
 
     {
-      "id": "icecekler", "name": "İçecekler", "icon": "🥤",
+      "id": "icecekler",
+      "name": "İçecekler",
+      "icon": "🥤",
       "items": [
-        { "id": 69, "name": "Küçük Ayran",               "description": "Küçük boy taze ayran.",                                                         "price": 20,  "image": "images/kucuk-ayran.jpg",               "badge": null             },
-        { "id": 70, "name": "Büyük Ayran",               "description": "Büyük boy taze ayran.",                                                         "price": 30,  "image": "images/buyuk-ayran.jpg",               "badge": null             },
-        { "id": 71, "name": "1 Lt Ayran",                "description": "1 litrelik aile boy ayran.",                                                    "price": 80,  "image": "images/1lt-ayran.jpg",                 "badge": null             },
-        { "id": 72, "name": "Acılı Ayran",               "description": "Pul biber ile hazırlanan acılı ayran.",                                         "price": 40,  "image": "images/acili-ayran.jpg",               "badge": null             },
-        { "id": 73, "name": "Şalgam",                    "description": "Geleneksel ekşi şalgam suyu — acı veya sade.",                                 "price": 50,  "image": "images/salgam.jpg",                    "badge": null             },
-        { "id": 74, "name": "1 Lt Şalgam",               "description": "1 litrelik şalgam suyu.",                                                       "price": 80,  "image": "images/1lt-salgam.jpg",                "badge": null             },
-        { "id": 75, "name": "Su",                         "description": "Şişe su.",                                                                      "price": 15,  "image": "images/su.jpg",                        "badge": null             },
-        { "id": 76, "name": "Sade Soda",                 "description": "Sade maden sodası.",                                                             "price": 15,  "image": "images/sade-soda.jpg",                 "badge": null             },
-        { "id": 77, "name": "Limonlu Soda",              "description": "Limon aromalı maden sodası.",                                                    "price": 20,  "image": "images/limonlu-soda.jpg",              "badge": null             },
-        { "id": 78, "name": "Meyveli Soda",              "description": "Meyve aromalı maden sodası.",                                                    "price": 20,  "image": "images/meyveli-soda.jpg",              "badge": null             },
-        { "id": 79, "name": "Meyve Suyu",                "description": "Şişe meyve suyu.",                                                               "price": 15,  "image": "images/meyve-suyu.jpg",                "badge": null             },
-        { "id": 80, "name": "Ice Tea",                   "description": "Soğuk çay — şeftali veya limon.",                                               "price": 70,  "image": "images/ice-tea.jpg",                   "badge": null             },
-        { "id": 81, "name": "Cappy",                     "description": "Cappy meyve suyu kutu.",                                                         "price": 70,  "image": "images/cappy.jpg",                     "badge": null             },
-        { "id": 82, "name": "Kutu Kola",                 "description": "Coca-Cola kutu.",                                                                "price": 70,  "image": "images/kutu-kola.jpg",                 "badge": null             },
-        { "id": 83, "name": "Kutu Fanta",                "description": "Fanta kutu.",                                                                    "price": 70,  "image": "images/kutu-fanta.jpg",                "badge": null             },
-        { "id": 84, "name": "Siyah Şişe Kola",          "description": "Coca-Cola şişe.",                                                                "price": 60,  "image": "images/siyah-sise-kola.jpg",           "badge": null             },
-        { "id": 85, "name": "Sarı Şişe Kola",           "description": "Fanta şişe.",                                                                    "price": 60,  "image": "images/sari-sise-kola.jpg",            "badge": null             },
-        { "id": 86, "name": "1 Lt Cola",                 "description": "1 litrelik Coca-Cola şişe.",                                                    "price": 80,  "image": "images/1lt-cola.jpg",                  "badge": null             },
-        { "id": 87, "name": "1 Lt Yedigün",              "description": "1 litrelik Yedigün şişe.",                                                      "price": 80,  "image": "images/1lt-yedigun.jpg",               "badge": null             },
-        { "id": 88, "name": "2.5 Lt Pepsi",              "description": "2.5 litrelik Pepsi.",                                                            "price": 110, "image": "images/25-pepsi.jpg",                  "badge": null             },
-        { "id": 89, "name": "2.5 Lt Yedigün",            "description": "2.5 litrelik Yedigün.",                                                         "price": 110, "image": "images/25-yedigun.jpg",                "badge": null             },
-        { "id": 90, "name": "3 Çeyrek",                  "description": "3 çeyrek litre büyük boy içecek.",                                              "price": 140, "image": "images/3-ceyrek.jpg",                  "badge": null             }
+        { "id": 69, "name": "Küçük Ayran",               "description": "Küçük boy taze ayran.",                                                       "price": 20,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 70, "name": "Büyük Ayran",               "description": "Büyük boy taze ayran.",                                                       "price": 30,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 71, "name": "1 Lt Ayran",                "description": "1 litrelik aile boy ayran.",                                                  "price": 80,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 72, "name": "Acılı Ayran",               "description": "Pul biber ile hazırlanan acılı ayran.",                                       "price": 40,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 73, "name": "Şalgam",                    "description": "Geleneksel ekşi şalgam suyu — acı veya sade.",                               "price": 50,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 74, "name": "1 Lt Şalgam",               "description": "1 litrelik şalgam suyu.",                                                     "price": 80,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 75, "name": "Su",                         "description": "Şişe su.",                                                                    "price": 15,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 76, "name": "Sade Soda",                 "description": "Sade maden sodası.",                                                           "price": 15,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 77, "name": "Limonlu Soda",              "description": "Limon aromalı maden sodası.",                                                  "price": 20,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 78, "name": "Meyveli Soda",              "description": "Meyve aromalı maden sodası.",                                                  "price": 20,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 79, "name": "Meyve Suyu",                "description": "Şişe meyve suyu.",                                                             "price": 15,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 80, "name": "Ice Tea",                   "description": "Soğuk çay — şeftali veya limon.",                                             "price": 70,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 81, "name": "Cappy",                     "description": "Cappy meyve suyu kutu.",                                                       "price": 70,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 82, "name": "Kutu Kola",                 "description": "Coca-Cola kutu.",                                                              "price": 70,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 83, "name": "Kutu Fanta",                "description": "Fanta kutu.",                                                                  "price": 70,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 84, "name": "Siyah Şişe Kola",          "description": "Coca-Cola şişe.",                                                              "price": 60,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 85, "name": "Sarı Şişe Kola",           "description": "Fanta şişe.",                                                                  "price": 60,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 86, "name": "1 Lt Cola",                 "description": "1 litrelik Coca-Cola şişe.",                                                  "price": 80,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 87, "name": "1 Lt Yedigün",              "description": "1 litrelik Yedigün şişe.",                                                    "price": 80,  "image": "images/logo.png",                       "badge": null             },
+        { "id": 88, "name": "2.5 Lt Pepsi",              "description": "2.5 litrelik Pepsi.",                                                          "price": 110, "image": "images/logo.png",                       "badge": null             },
+        { "id": 89, "name": "2.5 Lt Yedigün",            "description": "2.5 litrelik Yedigün.",                                                       "price": 110, "image": "images/logo.png",                       "badge": null             },
+        { "id": 90, "name": "3 Çeyrek",                  "description": "3 çeyrek litre büyük boy içecek.",                                            "price": 140, "image": "images/logo.png",                       "badge": null             }
       ]
     }
 
