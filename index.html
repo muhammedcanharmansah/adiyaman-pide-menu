@@ -188,18 +188,7 @@ main { max-width:640px; margin:0 auto; padding:0 0 48px; }
 .card-img { position:absolute; inset:0; z-index:1; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .35s ease; }
 .card-img.show { opacity:1; }
 
-/* ── KART (resimsiz — minimal) ── */
-.card.no-img {
-  background:transparent;
-  border:.5px solid var(--black-line);
-  min-height:56px;
-}
-.card.no-img:hover { background:var(--w10); border-color:rgba(212,175,55,.18); }
-.card.no-img .card-body { padding:14px 16px; flex-direction:row; align-items:center; justify-content:space-between; gap:12px; }
-.card.no-img .card-name { font-size:.95rem; font-weight:500; color:var(--w60); -webkit-line-clamp:1; }
-.card.no-img .card-bottom { flex-shrink:0; }
-.card.no-img .card-price { font-size:1rem; color:rgba(212,175,55,.75); }
-.card.no-img .card-tag { display:none; }
+/* ── KART (resimsiz) — resimli ile aynı stil ── */
 
 /* Rozet */
 .badge {
@@ -217,7 +206,7 @@ main { max-width:640px; margin:0 auto; padding:0 0 48px; }
 .card-name { font-family:var(--fg); font-size:1rem; font-weight:600; color:var(--white); line-height:1.2; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
 .card-bottom { display:flex; align-items:center; justify-content:space-between; gap:8px; }
 .card-price { font-family:var(--fg); font-size:1.15rem; font-weight:700; color:var(--gold); line-height:1; letter-spacing:.03em; }
-.card-price-sym { font-size:.72em; font-weight:400; margin-right:1px; vertical-align:middle; }
+.card-price-sym { font-size:.65em; font-weight:400; margin-left:2px; vertical-align:middle; opacity:.8; }
 .card-tag { font-family:var(--fm); font-size:.58rem; font-weight:600; color:var(--green); border:.5px solid var(--green-line); padding:2px 7px; border-radius:20px; letter-spacing:.06em; text-transform:uppercase; }
 
 /* ── YUKARI ÇIK BUTONU ── */
@@ -372,8 +361,8 @@ footer { background:var(--black-soft); border-top:1px solid var(--gold-line); pa
     <div class="review-title">Deneyiminizi Paylaşın</div>
     <div class="review-sub">Yorumlarınız bizim için çok değerli.<br>Google'da bize yorum yapar mısınız?</div>
     <a href="https://g.page/r/CSftd3YDSZgOEBM/review" target="_blank" rel="noopener"
-       class="review-btn" onclick="closeReview()">Yorum Yap ✦</a>
-    <button class="review-dismiss" onclick="closeReview()">Şimdi Değil</button>
+       class="review-btn" onclick="closeReview(false)">Yorum Yap ✦</a>
+    <button class="review-dismiss" onclick="closeReview(true)">Şimdi Değil</button>
   </div>
 </div>
 
@@ -436,38 +425,9 @@ function badgeClass(b) {
 /* ══ KART ══ */
 function buildCard(item, noImg) {
   const art = document.createElement('article');
-
-  if (noImg) {
-    /* Minimal resimsiz kart */
-    art.className = 'card no-img' + (item.badge==='Şef Önerisi' ? ' chef' : '');
-    const body = document.createElement('div');
-    body.className = 'card-body';
-
-    const name = document.createElement('h3');
-    name.className = 'card-name';
-    name.textContent = item.name;
-
-    const bot = document.createElement('div');
-    bot.className = 'card-bottom';
-    const price = document.createElement('span');
-    price.className = 'card-price';
-    price.innerHTML = `<span class="card-price-sym">₺</span>${item.price}`;
-
-    if (item.badge) {
-      const bd = document.createElement('span');
-      bd.className = badgeClass(item.badge);
-      bd.textContent = item.badge;
-      bot.appendChild(bd);
-    }
-    bot.appendChild(price);
-    body.appendChild(name); body.appendChild(bot);
-    art.appendChild(body);
-    return art;
-  }
-
-  /* Normal resimli kart */
   art.className = 'card' + (item.badge==='Şef Önerisi' ? ' chef' : '');
 
+  /* Görsel alanı — logo.png placeholder veya gerçek resim */
   const iw = document.createElement('div');
   iw.className = 'card-img-wrap';
 
@@ -476,12 +436,14 @@ function buildCard(item, noImg) {
   shim.innerHTML = `<img src="images/logo.png" alt="">`;
   iw.appendChild(shim);
 
-  const img = document.createElement('img');
-  img.className = 'card-img'; img.alt = item.name;
-  img.loading = 'lazy'; img.decoding = 'async';
-  img.onload  = () => { img.classList.add('show'); shim.style.display='none'; };
-  img.src = item.image;
-  iw.appendChild(img);
+  if (!noImg) {
+    const img = document.createElement('img');
+    img.className = 'card-img'; img.alt = item.name;
+    img.loading = 'lazy'; img.decoding = 'async';
+    img.onload  = () => { img.classList.add('show'); shim.style.display='none'; };
+    img.src = item.image;
+    iw.appendChild(img);
+  }
 
   if (item.badge) {
     const bd = document.createElement('span');
@@ -501,7 +463,7 @@ function buildCard(item, noImg) {
   bot.className = 'card-bottom';
   const price = document.createElement('span');
   price.className = 'card-price';
-  price.innerHTML = `<span class="card-price-sym">₺</span>${item.price}`;
+  price.innerHTML = `${item.price} <span class="card-price-sym">₺</span>`;
   const tag = document.createElement('span');
   tag.className = 'card-tag';
   tag.textContent = 'Taş Fırın';
@@ -570,33 +532,33 @@ window.addEventListener('scroll', () => {
 }, { passive:true });
 
 /* ══ YORUM POPUP ══ */
-function closeReview() {
-  document.getElementById('reviewPopup').classList.remove('show');
+function closeReview(retry) {
+  const popup = document.getElementById('reviewPopup');
+  popup.classList.remove('show');
+  /* "Şimdi Değil" → 120 sn sonra tekrar göster */
+  if (retry) {
+    setTimeout(() => {
+      popup.classList.add('show');
+    }, 120000);
+  }
 }
 
 function initReviewPopup() {
-  if (localStorage.getItem('reviewShown')) return; /* Daha önce gösterildi */
+  if (localStorage.getItem('reviewShown')) return;
 
-  let triggered = false;
   const popup = document.getElementById('reviewPopup');
 
   function showPopup() {
-    if (triggered) return;
-    triggered = true;
     localStorage.setItem('reviewShown', '1');
     popup.classList.add('show');
   }
 
-  /* Sayfanın en altına ulaşıldığında tetikle */
-  window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY + window.innerHeight;
-    const total    = document.documentElement.scrollHeight;
-    if (scrolled >= total - 60) showPopup();
-  }, { passive:true });
+  /* 30 saniye sonra ilk gösterim */
+  setTimeout(showPopup, 30000);
 
-  /* Popup dışına tıklanırsa kapat */
+  /* Popup dışına tıklayınca kapat (retry=true → 120sn sonra yeniden) */
   popup.addEventListener('click', e => {
-    if (e.target === popup) closeReview();
+    if (e.target === popup) closeReview(true);
   });
 }
 
@@ -665,12 +627,20 @@ function render(d) {
   initReviewPopup();
 }
 
-/* ════════════════════════════════
-   MENÜ VERİSİ
-   Fiyat güncellemek için sadece
-   price rakamını değiştirin.
-   badge: 'En Çok Satan' | 'Şef Önerisi' | 'Yeni' | 'Geleneksel' | null
-════════════════════════════════ */
+/* ════════════════════════════════════════════════════════
+   ▼▼▼  TÜM VERİLERİ SADECE BURADAN DÜZENLEYİN  ▼▼▼
+   ════════════════════════════════════════════════════════
+   restaurant   → ad, slogan, telefon, adres
+   announcements → kayan duyurular (emoji kullanabilirsiniz)
+   ownerNote    → altın şeritteki usta mesajı
+   categories   → menü kategorileri ve ürünler
+
+   Her ürün için:
+     name  → ürün adı
+     price → sadece rakam (₺ otomatik eklenir)
+     image → images/ klasöründeki dosya adı
+     badge → 'En Çok Satan' | 'Şef Önerisi' | 'Yeni' | 'Geleneksel' | null
+   ════════════════════════════════════════════════════════ */
 const MENU_DATA = {
   "restaurant": { "name":"Adıyaman Pide", "tagline":"Ustanın Elinden, Toprağın Özünden", "phone":"0416 XXX XX XX", "address":"Adıyaman Merkez" },
   "announcements": [
