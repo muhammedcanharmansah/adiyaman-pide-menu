@@ -65,7 +65,7 @@ header::after {
   width:1px; height:28px; background:linear-gradient(to bottom,transparent,var(--gold));
 }
 .header-logo {
-  width:120px; height:120px; border-radius:50%; object-fit:cover;
+  width:150px; height:150px; border-radius:50%; object-fit:cover;
   border:2px solid var(--gold-line); margin:0 auto 18px; display:block;
 }
 .header-logo-fallback {
@@ -214,7 +214,7 @@ main { max-width:640px; margin:0 auto; padding:0 0 48px; }
 
 /* Kart gövdesi */
 .card-body { flex:1; min-width:0; padding:12px 14px; display:flex; flex-direction:column; justify-content:center; gap:8px; }
-.card-name { font-family:var(--fg); font-size:1rem; font-weight:600; color:var(--white); line-height:1.2; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+.card-name { font-family:var(--fg); font-size:1rem; font-weight:600; color:var(--white); line-height:1.2; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; }
 .card-bottom { display:flex; align-items:center; justify-content:space-between; gap:8px; }
 .card-price { font-family:var(--fg); font-size:1.15rem; font-weight:700; color:var(--gold); line-height:1; letter-spacing:.03em; }
 .card-price-sym { font-size:.65em; font-weight:400; margin-left:2px; vertical-align:middle; opacity:.8; }
@@ -230,7 +230,8 @@ main { max-width:640px; margin:0 auto; padding:0 0 48px; }
   text-decoration:none;
   transition:background .2s, border-color .2s;
   cursor:pointer;
-  animation:fadeUp .4s ease forwards; opacity:0;
+  animation:fadeUp .4s ease forwards;
+  opacity:0;
 }
 .review-inline-card:hover { background:rgba(212,175,55,.1); border-color:rgba(212,175,55,.4); }
 .ric-stars { font-size:.75rem; letter-spacing:1px; flex-shrink:0; }
@@ -326,7 +327,7 @@ footer { background:var(--black-soft); border-top:1px solid var(--gold-line); pa
 <!-- LOADING -->
 <div id="loading">
   <div class="load-ring"></div>
-  <div class="load-txt">Adıyaman Pide</div>
+  <div class="load-txt" style="text-align:center">Adıyaman Pide</div>
 </div>
 
 <!-- HEADER -->
@@ -552,8 +553,8 @@ function buildSection(cat) {
   cat.items.forEach((item, idx) => {
     const noImg = isNoImg || !item.image || item.image === 'images/logo.png';
     list.appendChild(buildCard(item, noImg));
-    /* Her 7. üründen sonra yorum kartı ekle (son ürün hariç) */
-    if ((idx + 1) % 7 === 0 && idx < cat.items.length - 1) {
+    /* Her 14. üründen sonra yorum kartı ekle (son ürün hariç) */
+    if ((idx + 1) % 14 === 0 && idx < cat.items.length - 1) {
       list.appendChild(buildReviewCard());
     }
   });
@@ -573,7 +574,7 @@ function setActive(id) {
 function initSpy() {
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if(e.isIntersecting) setActive(e.target.id.replace('cat-','')); });
-  }, { rootMargin:'-55px 0px -45% 0px', threshold:0 });
+  }, { rootMargin:'-55px 0px -45% 0px', threshold:0.11 });
   document.querySelectorAll('.sec[id]').forEach(s => obs.observe(s));
 }
 
@@ -705,9 +706,7 @@ const MENU_DATA = {
   "restaurant": { "name":"Adıyaman Pide", "tagline":"Ustanın Elinden, Toprağın Özünden", "phone":"0212 475 47 64", "address":"50. Yıl Mah. I Cad. No 112/B Sultangazi/İstanbul" },
   "announcements": [
     "🔥 Bugün taze kuzu eti ile hazırladık — doğrudan çiftlikten!",
-    "🌿 Tüm pidelerimiz taş fırında, odun ateşinde pişirilmektedir.",
-    "⭐ Haftanın önerisi: Adıyaman Special — mutlaka deneyin!",
-    "🎉 10 ve üzeri siparişlerde ücretsiz servis imkânı mevcuttur."
+    "⭐ Haftanın önerisi: Adıyaman Special — mutlaka deneyin!"
   ],
   "ownerNote": "Sevgili misafirlerimiz, her lokmada emek ve sevgi var. Afiyet olsun! — Usta Mehmet",
   "categories": [
@@ -748,33 +747,26 @@ const MENU_DATA = {
         {"id":22,"name":"Porsiyon Döner","price":230,"image":"images/porsiyon-doner.jpg","badge":null},
         {"id":23,"name":"Sade Tavuk Döner","price":125,"image":null,"badge":null},
         {"id":24,"name":"Lavaş Döner","price":140,"image":"images/durum-doner.jpg","badge":null},
-        {"id":25,"name":"Lavaş Kaşarlı Döner","price":160,"image":"images/durum-doner.jpg","badge":null},
         {"id":26,"name":"Fırın Döner","price":160,"image":null,"badge":null},
         {"id":27,"name":"Yarım Ekmek Döner","price":80,"image":null,"badge":null},
         {"id":28,"name":"Tam Ekmek Döner","price":160,"image":null,"badge":null},
         {"id":29,"name":"Tombik Döner","price":80,"image":null,"badge":null},
         {"id":30,"name":"Tombik Kaşarlı Döner","price":100,"image":null,"badge":null},
-        {"id":31,"name":"Tırnaklı Tavuk Dürüm","price":140,"image":"images/durum-doner.jpg","badge":null}
+        {"id":31,"name":"Tırnaklı Tavuk Dürüm","price":140,"image":"images/durum-doner.jpg","badge":null},
+        {"id":90,"name":"3 Çeyrek","price":140,"image":null,"badge":null}
+
       ]
     },
     {
-      "id":"kebap","name":"Kebap",
+      "id":"kebap-porsiyon","name":"Kebap Porsiyonları",
       "items":[
-        {"id":32,"name":"Adana","price":330,"image":null,"badge":null},
-        {"id":33,"name":"Adana Dürüm","price":220,"image":null,"badge":null},
-        {"id":34,"name":"Adana Kaşarlı Fırın Dürüm","price":260,"image":null,"badge":null},
-        {"id":35,"name":"Urfa","price":330,"image":null,"badge":null},
-        {"id":36,"name":"Urfa Dürüm","price":220,"image":null,"badge":null},
-        {"id":37,"name":"Urfa Kaşarlı Fırın Dürüm","price":260,"image":null,"badge":null},
-        {"id":38,"name":"Tavuk Şiş","price":320,"image":null,"badge":null},
-        {"id":39,"name":"Tavuk Şiş Dürüm","price":210,"image":null,"badge":null},
-        {"id":40,"name":"Kanat","price":320,"image":null,"badge":null},
-        {"id":41,"name":"Et Şiş","price":350,"image":null,"badge":null},
-        {"id":42,"name":"Et Şiş Dürüm","price":250,"image":null,"badge":null},
-        {"id":43,"name":"Ciğer Şiş","price":350,"image":null,"badge":"Geleneksel"},
-        {"id":44,"name":"Ciğer Şiş Dürüm","price":250,"image":null,"badge":null},
-        {"id":45,"name":"Çöp Şiş","price":340,"image":null,"badge":null},
-        {"id":46,"name":"Çöp Şiş Dürüm","price":250,"image":null,"badge":null},
+        {"id":32,"name":"Adana Porsiyon","price":330,"image":null,"badge":null},
+        {"id":35,"name":"Urfa Porsiyon","price":330,"image":null,"badge":null},
+        {"id":38,"name":"Tavuk Şiş Porsiyon","price":320,"image":null,"badge":null},
+        {"id":40,"name":"Kanat Porsiyon","price":320,"image":null,"badge":null},
+        {"id":41,"name":"Et Şiş Porsiyon","price":350,"image":null,"badge":null},
+        {"id":43,"name":"Ciğer Şiş Porsiyon","price":350,"image":null,"badge":"Geleneksel"},
+        {"id":45,"name":"Çöp Şiş Porsiyon","price":340,"image":null,"badge":null},
         {"id":47,"name":"Beyti Sarma","price":340,"image":null,"badge":null},
         {"id":48,"name":"Kasap Köfte","price":340,"image":null,"badge":null},
         {"id":49,"name":"Domatesli Kebap","price":350,"image":null,"badge":null},
@@ -785,60 +777,44 @@ const MENU_DATA = {
       ]
     },
     {
+      "id":"kebap-durum","name":"Kebap Dürümleri",
+      "items":[
+        {"id":33,"name":"Adana Dürüm","price":220,"image":null,"badge":null},
+        {"id":34,"name":"Adana Kaşarlı Fırın Dürüm","price":260,"image":null,"badge":null},
+        {"id":36,"name":"Urfa Dürüm","price":220,"image":null,"badge":null},
+        {"id":37,"name":"Urfa Kaşarlı Fırın Dürüm","price":260,"image":null,"badge":null},
+        {"id":39,"name":"Tavuk Şiş Dürüm","price":210,"image":null,"badge":null},
+        {"id":42,"name":"Et Şiş Dürüm","price":250,"image":null,"badge":null},
+        {"id":44,"name":"Ciğer Şiş Dürüm","price":250,"image":null,"badge":null},
+        {"id":46,"name":"Çöp Şiş Dürüm","price":250,"image":null,"badge":null}
+      ]
+    },
+    {
       "id":"corba","name":"Çorba",
       "items":[
-        {"id":54,"name":"Çorba","price":80,"image":null,"badge":null}
-      ]
-    },
-    {
-      "id":"yanlar","name":"Yanlar",
-      "items":[
-        {"id":55,"name":"Yağlı","price":16,"image":null,"badge":null},
-        {"id":56,"name":"Kaşarlı Yağlı","price":20,"image":null,"badge":null},
-        {"id":57,"name":"Kıymalı Yağlı","price":20,"image":null,"badge":null},
-        {"id":58,"name":"Kavurmalı Yağlı","price":25,"image":null,"badge":null},
-        {"id":59,"name":"Kavurma Kaşarlı Yağlı","price":30,"image":null,"badge":null},
-        {"id":60,"name":"Ekmek","price":15,"image":null,"badge":null},
-        {"id":61,"name":"Lavaş","price":15,"image":null,"badge":null},
-        {"id":62,"name":"Tombik","price":13,"image":null,"badge":null},
-        {"id":68,"name":"Biber","price":8,"image":null,"badge":null}
-      ]
-    },
-    {
-      "id":"salatalar","name":"Salatalar",
-      "items":[
-        {"id":63,"name":"Salata","price":20,"image":null,"badge":null},
-        {"id":64,"name":"Ezme","price":20,"image":null,"badge":null},
-        {"id":65,"name":"Yoğurt Ezmesi","price":20,"image":null,"badge":null},
-        {"id":66,"name":"Çoban Salata","price":30,"image":null,"badge":null},
-        {"id":67,"name":"Soğan Salatası","price":10,"image":null,"badge":null}
+        {"id":54,"name":"Mercimek Çorbası","price":80,"image":null,"badge":null}
       ]
     },
     {
       "id":"icecekler","name":"İçecekler",
       "items":[
-        {"id":69,"name":"Küçük Ayran","price":20,"image":null,"badge":null},
-        {"id":70,"name":"Büyük Ayran","price":30,"image":null,"badge":null},
-        {"id":71,"name":"1 Lt Ayran","price":80,"image":null,"badge":null},
-        {"id":72,"name":"Acılı Ayran","price":40,"image":null,"badge":null},
-        {"id":73,"name":"Şalgam","price":50,"image":null,"badge":null},
-        {"id":74,"name":"1 Lt Şalgam","price":80,"image":null,"badge":null},
-        {"id":75,"name":"Su","price":15,"image":null,"badge":null},
-        {"id":76,"name":"Sade Soda","price":15,"image":null,"badge":null},
-        {"id":77,"name":"Limonlu Soda","price":20,"image":null,"badge":null},
-        {"id":78,"name":"Meyveli Soda","price":20,"image":null,"badge":null},
-        {"id":79,"name":"Meyve Suyu","price":15,"image":null,"badge":null},
-        {"id":80,"name":"Ice Tea","price":70,"image":null,"badge":null},
-        {"id":81,"name":"Cappy","price":70,"image":null,"badge":null},
-        {"id":82,"name":"Kutu Kola","price":70,"image":null,"badge":null},
-        {"id":83,"name":"Kutu Fanta","price":70,"image":null,"badge":null},
-        {"id":84,"name":"Siyah Şişe Kola","price":60,"image":null,"badge":null},
-        {"id":85,"name":"Sarı Şişe Kola","price":60,"image":null,"badge":null},
-        {"id":86,"name":"1 Lt Cola","price":80,"image":null,"badge":null},
-        {"id":87,"name":"1 Lt Yedigün","price":80,"image":null,"badge":null},
-        {"id":88,"name":"2.5 Lt Pepsi","price":110,"image":null,"badge":null},
-        {"id":89,"name":"2.5 Lt Yedigün","price":110,"image":null,"badge":null},
-        {"id":90,"name":"3 Çeyrek","price":140,"image":null,"badge":null}
+        {"id":69,"name":"Sütaş Ayran (200 ml)","price":20,"image":null,"badge":null},
+        {"id":70,"name":"Sütaş Ayran (300 ml)","price":30,"image":null,"badge":null},
+        {"id":71,"name":"Sütaş Ayran (1 Lt)","price":80,"image":null,"badge":null},
+        {"id":72,"name":"Acılı Ayran (330 ml)","price":40,"image":null,"badge":null},
+        {"id":73,"name":"Şalgam (330 ml)","price":50,"image":null,"badge":null},
+        {"id":75,"name":"Su (500 ml)","price":15,"image":null,"badge":null},
+        {"id":76,"name":"Soda (200 ml)","price":15,"image":null,"badge":null},
+        {"id":80,"name":"Lipton Ice Tea (330 ml)","price":70,"image":null,"badge":null},
+        {"id":81,"name":"Cappy (330 ml)","price":70,"image":null,"badge":null},
+        {"id":82,"name":"Kutu Pepsi (330 ml)","price":70,"image":null,"badge":null},
+        {"id":83,"name":"Kutu Yedigün (330 ml)","price":70,"image":null,"badge":null},
+        {"id":84,"name":"Şişe Pepsi (200 ml)","price":60,"image":null,"badge":null},
+        {"id":85,"name":"Şişe Yedigün (200 ml)","price":60,"image":null,"badge":null},
+        {"id":86,"name":"Pepsi (1 Lt)","price":80,"image":null,"badge":null},
+        {"id":87,"name":"Yedigün (1 Lt)","price":80,"image":null,"badge":null},
+        {"id":88,"name":"Pepsi (2,5 Lt)","price":110,"image":null,"badge":null},
+        {"id":89,"name":"Yedigün (2,5 Lt)","price":110,"image":null,"badge":null},
       ]
     }
   ]
