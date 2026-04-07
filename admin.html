@@ -2,59 +2,786 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Menü Yönetimi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yönetim Paneli</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg:      #0e0e0e;
+      --bg2:     #161616;
+      --bg3:     #1e1e1e;
+      --gold:    #c9a84c;
+      --gold-lt: #e8c97a;
+      --text:    #f0ece4;
+      --muted:   #888;
+      --danger:  #e05555;
+      --success: #5cb85c;
+      --border:  rgba(201,168,76,0.18);
+      --radius:  12px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* ── GİRİŞ EKRANI ── */
+    #giris-ekrani {
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      background: #f5f5f5;
+      padding: 24px;
     }
-    .kart {
-      background: white;
-      border-radius: 16px;
-      padding: 40px;
+    .giris-kart {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 44px 40px;
+      width: 100%;
+      max-width: 380px;
       text-align: center;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-      max-width: 400px;
     }
-    h1 { margin-bottom: 8px; }
-    p { color: #666; margin-bottom: 24px; }
-    a {
-      display: inline-block;
-      background: #34a853;
-      color: white;
-      padding: 14px 28px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
+    .giris-kart h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      color: var(--gold);
+      margin-bottom: 6px;
     }
-    .ipucu {
-      margin-top: 24px;
+    .giris-kart p {
       font-size: 13px;
-      color: #999;
-      text-align: left;
-      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 32px;
     }
+    .giris-kart input {
+      width: 100%;
+      padding: 13px 16px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .giris-kart input:focus { border-color: var(--gold); }
+    .giris-kart input::placeholder { letter-spacing: 0.05em; color: var(--muted); }
+    .hata-mesaj {
+      color: var(--danger);
+      font-size: 13px;
+      margin-top: 10px;
+      min-height: 18px;
+    }
+
+    /* ── PANEL ── */
+    #panel { display: none; }
+
+    .panel-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(14,14,14,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .panel-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      color: var(--gold);
+    }
+    .header-actions { display: flex; gap: 10px; align-items: center; }
+
+    /* ── BUTONLAR ── */
+    .btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-gold { background: var(--gold); color: #0e0e0e; }
+    .btn-gold:hover { background: var(--gold-lt); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-danger { background: transparent; border: 1px solid rgba(224,85,85,0.3); color: var(--danger); }
+    .btn-danger:hover { background: rgba(224,85,85,0.1); }
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+    .btn-icon { padding: 8px 10px; }
+
+    /* ── PANEL İÇERİK ── */
+    .panel-body { padding: 24px 20px; max-width: 900px; margin: 0 auto; }
+
+    /* ── SEKME ── */
+    .sekme-bar {
+      display: flex;
+      gap: 4px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 24px;
+    }
+    .sekme-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .sekme-btn.active { background: var(--bg3); color: var(--gold); }
+
+    /* ── KART ── */
+    .kart {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .kart-baslik {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    /* ── FORM ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .form-grid .full { grid-column: 1 / -1; }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="url"],
+    input[type="file"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+    select option { background: var(--bg3); }
+    textarea { resize: vertical; min-height: 70px; }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 16px;
+    }
+
+    /* ── ÜRÜN LİSTESİ ── */
+    .urun-liste { display: flex; flex-direction: column; gap: 8px; }
+
+    .urun-satir {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 12px 14px;
+      transition: border-color 0.2s;
+    }
+    .urun-satir:hover { border-color: var(--border); }
+    .urun-satir.pasif { opacity: 0.45; }
+
+    .urun-satir img {
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: var(--bg2);
+    }
+    .urun-satir-bilgi { flex: 1; min-width: 0; }
+    .urun-satir-ad {
+      font-weight: 500;
+      font-size: 14px;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .urun-satir-alt {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      gap: 10px;
+    }
+    .badge-kat {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: rgba(201,168,76,0.12);
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.2);
+      white-space: nowrap;
+    }
+    .urun-satir-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+    /* Toggle switch */
+    .toggle-wrap { display: flex; align-items: center; gap: 8px; }
+    .toggle {
+      position: relative;
+      width: 38px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.1);
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      transition: transform 0.2s;
+    }
+    .toggle input:checked + .toggle-slider { background: var(--gold); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(16px); }
+
+    /* Düzenleme modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 12px 24px;
+      font-size: 14px;
+      color: var(--text);
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 999;
+      white-space: nowrap;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Sheet bağlantısı */
+    .sheet-link-wrap {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .sheet-link-wrap input { flex: 1; }
+
+    .bilgi-kutu {
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 520px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid .full { grid-column: 1; }
+      .giris-kart { padding: 32px 24px; }
+      .panel-body { padding: 16px; }
+    }
+
+    /* Buton yükleniyor */
+    .btn.loading-state { opacity: 0.6; pointer-events: none; }
   </style>
 </head>
 <body>
-  <div class="kart">
-    <h1>🍽️ Menü Yönetimi</h1>
-    <p>Menüyü güncellemek için tabloya git:</p>
-    <a href="https://docs.google.com/spreadsheets/d/SHEET_ID" target="_blank">
-      Tabloyu Aç
-    </a>
-    <div class="ipucu">
-      <strong>Hatırlatmalar:</strong><br>
-      ✅ Ürün eklemek → yeni satır aç<br>
-      ✅ Ürünü gizlemek → aktif sütununu FALSE yap<br>
-      ✅ Fiyat değiştirmek → fiyat sütununu düzenle<br>
-      ⏱️ Değişiklikler 1-2 dk içinde sitede görünür
+
+<!-- ── GİRİŞ EKRANI ── -->
+<div id="giris-ekrani">
+  <div class="giris-kart">
+    <h1>Yönetim Paneli</h1>
+    <p>Devam etmek için şifreyi giriniz</p>
+    <input type="password" id="sifre-input" placeholder="Şifre" autocomplete="off">
+    <div class="hata-mesaj" id="hata-mesaj"></div>
+    <button class="btn btn-gold" style="width:100%;margin-top:16px;padding:14px" onclick="girisKontrol()">
+      Giriş Yap
+    </button>
+  </div>
+</div>
+
+<!-- ── ANA PANEL ── -->
+<div id="panel">
+  <div class="panel-header">
+    <h1>⚙️ Yönetim Paneli</h1>
+    <div class="header-actions">
+      <a href="index.html" class="btn btn-outline btn-sm">← Siteye Dön</a>
+      <button class="btn btn-outline btn-sm" onclick="cikisYap()">Çıkış</button>
     </div>
   </div>
+
+  <div class="panel-body">
+
+    <div class="sekme-bar">
+      <button class="sekme-btn active" onclick="sekmeAc('urunler', this)">Ürünler</button>
+      <button class="sekme-btn" onclick="sekmeAc('ekle', this)">+ Yeni Ekle</button>
+      <button class="sekme-btn" onclick="sekmeAc('ayarlar', this)">Ayarlar</button>
+    </div>
+
+    <!-- SEKME: ÜRÜNLER -->
+    <div id="sekme-urunler">
+      <div class="kart">
+        <div class="kart-baslik">Tüm Ürünler</div>
+        <div class="urun-liste" id="urun-listesi">
+          <div style="color:var(--muted);font-size:13px;text-align:center;padding:20px">Yükleniyor...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEKME: YENİ ÜRÜN EKLE -->
+    <div id="sekme-ekle" style="display:none">
+      <div class="kart">
+        <div class="kart-baslik">Yeni Ürün Ekle</div>
+        <div class="form-grid">
+          <div>
+            <label>Ürün Adı *</label>
+            <input type="text" id="yeni-ad" placeholder="Örn: Margarita">
+          </div>
+          <div>
+            <label>Fiyat (₺) *</label>
+            <input type="number" id="yeni-fiyat" placeholder="180">
+          </div>
+          <div>
+            <label>Kategori *</label>
+            <input type="text" id="yeni-kategori" placeholder="Örn: Pizza, İçecek...">
+          </div>
+          <div>
+            <label>Aktif</label>
+            <div class="toggle-wrap" style="padding-top:8px">
+              <label class="toggle">
+                <input type="checkbox" id="yeni-aktif" checked>
+                <span class="toggle-slider"></span>
+              </label>
+              <span style="font-size:13px;color:var(--muted)" id="yeni-aktif-label">Aktif</span>
+            </div>
+          </div>
+          <div class="full">
+            <label>Açıklama</label>
+            <textarea id="yeni-aciklama" placeholder="Malzemeler veya kısa açıklama..."></textarea>
+          </div>
+          <div class="full">
+            <label>Resim URL</label>
+            <input type="url" id="yeni-resim" placeholder="https://...">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-outline" onclick="formuSifirla()">Temizle</button>
+          <button class="btn btn-gold" onclick="urunEkle()">Ürünü Ekle</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEKME: AYARLAR -->
+    <div id="sekme-ayarlar" style="display:none">
+      <div class="kart">
+        <div class="kart-baslik">Google Sheets Bağlantısı</div>
+        <label>Sheet ID</label>
+        <div class="sheet-link-wrap">
+          <input type="text" id="sheet-id-input" placeholder="1BxiM...">
+          <button class="btn btn-gold" onclick="sheetIdKaydet()">Kaydet</button>
+        </div>
+        <div class="bilgi-kutu">
+          Sheet URL'inde <strong style="color:var(--text)">/d/</strong> ile <strong style="color:var(--text)">/edit</strong> arasındaki kısım Sheet ID'dir.<br>
+          Tabloyu herkese açık (görüntüleyici) yapıp buraya yapıştırın.
+        </div>
+      </div>
+
+      <div class="kart">
+        <div class="kart-baslik">Restoran Bilgileri</div>
+        <div class="form-grid">
+          <div class="full">
+            <label>Restoran Adı</label>
+            <input type="text" id="rest-ad" placeholder="Lezzet Durağı">
+          </div>
+          <div class="full">
+            <label>Adres</label>
+            <input type="text" id="rest-adres" placeholder="Cadde No, İlçe / Şehir">
+          </div>
+          <div>
+            <label>Telefon</label>
+            <input type="text" id="rest-tel" placeholder="+90 ...">
+          </div>
+          <div>
+            <label>Çalışma Saatleri</label>
+            <input type="text" id="rest-saat" placeholder="11:00 — 23:00">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold" onclick="bilgileriKaydet()">Kaydet</button>
+        </div>
+        <div class="bilgi-kutu" style="margin-top:12px">
+          Bu bilgiler tarayıcınızda saklanır. index.html içindeki footer'ı manuel de düzenleyebilirsiniz.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── DÜZENLEME MODAL ── -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h2>Ürünü Düzenle</h2>
+    <input type="hidden" id="duzenle-index">
+    <div class="form-grid">
+      <div>
+        <label>Ürün Adı</label>
+        <input type="text" id="duzenle-ad">
+      </div>
+      <div>
+        <label>Fiyat (₺)</label>
+        <input type="number" id="duzenle-fiyat">
+      </div>
+      <div>
+        <label>Kategori</label>
+        <input type="text" id="duzenle-kategori">
+      </div>
+      <div>
+        <label>Aktif</label>
+        <div class="toggle-wrap" style="padding-top:8px">
+          <label class="toggle">
+            <input type="checkbox" id="duzenle-aktif">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="full">
+        <label>Açıklama</label>
+        <textarea id="duzenle-aciklama"></textarea>
+      </div>
+      <div class="full">
+        <label>Resim URL</label>
+        <input type="url" id="duzenle-resim">
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-danger" onclick="modalKapat()">İptal</button>
+      <button class="btn btn-gold" onclick="duzenlemeyiKaydet()">Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+  // ── ŞİFRE — sadece buradan değiştir ──
+  const ADMIN_SIFRE = 'lezzet2024';
+
+  // ── VERİ (localStorage) ──
+  let urunler = [];
+
+  function veriYukle() {
+    const kayitli = localStorage.getItem('menu_urunler');
+    if (kayitli) {
+      urunler = JSON.parse(kayitli);
+    } else {
+      // Başlangıç örnek verisi
+      urunler = [
+        { kategori: 'Pizza', ad: 'Margarita', fiyat: 180, aciklama: 'Domates sosu, taze mozzarella, fesleğen', resim: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=200&q=80', aktif: true },
+        { kategori: 'Pizza', ad: 'Karışık', fiyat: 220, aciklama: 'Sucuk, mantar, biber, mısır', resim: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200&q=80', aktif: true },
+        { kategori: 'Burger', ad: 'Klasik Burger', fiyat: 160, aciklama: 'Dana köfte, cheddar, karamelize soğan', resim: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&q=80', aktif: true },
+        { kategori: 'İçecek', ad: 'Ayran', fiyat: 30, aciklama: 'Ev yapımı, taze çırpılmış', resim: '', aktif: true },
+      ];
+      veriKaydet();
+    }
+  }
+
+  function veriKaydet() {
+    localStorage.setItem('menu_urunler', JSON.stringify(urunler));
+  }
+
+  // ── GİRİŞ ──
+  document.getElementById('sifre-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') girisKontrol();
+  });
+
+  function girisKontrol() {
+    const girilen = document.getElementById('sifre-input').value;
+    if (girilen === ADMIN_SIFRE) {
+      sessionStorage.setItem('admin_giris', '1');
+      document.getElementById('giris-ekrani').style.display = 'none';
+      document.getElementById('panel').style.display = 'block';
+      veriYukle();
+      listeGuncelle();
+    } else {
+      const hata = document.getElementById('hata-mesaj');
+      hata.textContent = 'Hatalı şifre, tekrar deneyin.';
+      document.getElementById('sifre-input').value = '';
+      setTimeout(() => hata.textContent = '', 3000);
+    }
+  }
+
+  function cikisYap() {
+    sessionStorage.removeItem('admin_giris');
+    location.reload();
+  }
+
+  // Sayfa yenilenirse giriş kontrolü
+  if (sessionStorage.getItem('admin_giris') === '1') {
+    document.getElementById('giris-ekrani').style.display = 'none';
+    document.getElementById('panel').style.display = 'block';
+    veriYukle();
+    setTimeout(listeGuncelle, 10);
+  }
+
+  // ── SEKME ──
+  function sekmeAc(isim, btn) {
+    ['urunler','ekle','ayarlar'].forEach(s => {
+      document.getElementById('sekme-' + s).style.display = s === isim ? 'block' : 'none';
+    });
+    document.querySelectorAll('.sekme-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (isim === 'urunler') listeGuncelle();
+    if (isim === 'ayarlar') ayarlariYukle();
+  }
+
+  // ── LİSTE ──
+  function listeGuncelle() {
+    const liste = document.getElementById('urun-listesi');
+    if (!urunler.length) {
+      liste.innerHTML = '<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px">Henüz ürün yok.</div>';
+      return;
+    }
+
+    liste.innerHTML = urunler.map((u, i) => `
+      <div class="urun-satir ${u.aktif ? '' : 'pasif'}">
+        <img src="${u.resim || 'https://placehold.co/52x52/1e1e1e/888?text=Resim'}"
+          alt="${u.ad}"
+          onerror="this.src='https://placehold.co/52x52/1e1e1e/888?text=Resim'">
+        <div class="urun-satir-bilgi">
+          <div class="urun-satir-ad">${u.ad}</div>
+          <div class="urun-satir-alt">
+            <span>${u.fiyat} ₺</span>
+            <span class="badge-kat">${u.kategori}</span>
+          </div>
+        </div>
+        <div class="urun-satir-actions">
+          <label class="toggle" title="${u.aktif ? 'Pasif yap' : 'Aktif yap'}">
+            <input type="checkbox" ${u.aktif ? 'checked' : ''} onchange="durumToggle(${i})">
+            <span class="toggle-slider"></span>
+          </label>
+          <button class="btn btn-outline btn-sm btn-icon" onclick="duzenleAc(${i})" title="Düzenle">✏️</button>
+          <button class="btn btn-danger btn-sm btn-icon" onclick="urunSil(${i})" title="Sil">🗑️</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ── DURUM DEĞİŞTİR ──
+  function durumToggle(i) {
+    urunler[i].aktif = !urunler[i].aktif;
+    veriKaydet();
+    listeGuncelle();
+    toast(urunler[i].aktif ? '✅ Ürün aktif edildi' : '⏸ Ürün pasif edildi');
+  }
+
+  // ── SİL ──
+  function urunSil(i) {
+    if (!confirm(`"${urunler[i].ad}" silinsin mi?`)) return;
+    urunler.splice(i, 1);
+    veriKaydet();
+    listeGuncelle();
+    toast('🗑️ Ürün silindi');
+  }
+
+  // ── DÜZENLE ──
+  function duzenleAc(i) {
+    const u = urunler[i];
+    document.getElementById('duzenle-index').value = i;
+    document.getElementById('duzenle-ad').value = u.ad;
+    document.getElementById('duzenle-fiyat').value = u.fiyat;
+    document.getElementById('duzenle-kategori').value = u.kategori;
+    document.getElementById('duzenle-aciklama').value = u.aciklama;
+    document.getElementById('duzenle-resim').value = u.resim;
+    document.getElementById('duzenle-aktif').checked = u.aktif;
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function modalKapat() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  function duzenlemeyiKaydet() {
+    const i = parseInt(document.getElementById('duzenle-index').value);
+    urunler[i] = {
+      ad:       document.getElementById('duzenle-ad').value,
+      fiyat:    parseFloat(document.getElementById('duzenle-fiyat').value) || 0,
+      kategori: document.getElementById('duzenle-kategori').value,
+      aciklama: document.getElementById('duzenle-aciklama').value,
+      resim:    document.getElementById('duzenle-resim').value,
+      aktif:    document.getElementById('duzenle-aktif').checked,
+    };
+    veriKaydet();
+    listeGuncelle();
+    modalKapat();
+    toast('✅ Ürün güncellendi');
+  }
+
+  document.getElementById('modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('modal')) modalKapat();
+  });
+
+  // ── YENİ ÜRÜN EKLE ──
+  document.getElementById('yeni-aktif').addEventListener('change', function() {
+    document.getElementById('yeni-aktif-label').textContent = this.checked ? 'Aktif' : 'Pasif';
+  });
+
+  function urunEkle() {
+    const ad = document.getElementById('yeni-ad').value.trim();
+    const fiyat = document.getElementById('yeni-fiyat').value;
+    const kategori = document.getElementById('yeni-kategori').value.trim();
+    if (!ad || !fiyat || !kategori) {
+      toast('⚠️ Ad, fiyat ve kategori zorunlu');
+      return;
+    }
+    urunler.push({
+      ad,
+      fiyat: parseFloat(fiyat),
+      kategori,
+      aciklama: document.getElementById('yeni-aciklama').value,
+      resim:    document.getElementById('yeni-resim').value,
+      aktif:    document.getElementById('yeni-aktif').checked,
+    });
+    veriKaydet();
+    formuSifirla();
+    toast('✅ Ürün eklendi!');
+    sekmeAc('urunler', document.querySelectorAll('.sekme-btn')[0]);
+  }
+
+  function formuSifirla() {
+    ['yeni-ad','yeni-fiyat','yeni-kategori','yeni-aciklama','yeni-resim'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('yeni-aktif').checked = true;
+  }
+
+  // ── AYARLAR ──
+  function ayarlariYukle() {
+    const sheetId = localStorage.getItem('sheet_id') || '';
+    document.getElementById('sheet-id-input').value = sheetId;
+    const bilgi = JSON.parse(localStorage.getItem('restoran_bilgi') || '{}');
+    document.getElementById('rest-ad').value = bilgi.ad || '';
+    document.getElementById('rest-adres').value = bilgi.adres || '';
+    document.getElementById('rest-tel').value = bilgi.tel || '';
+    document.getElementById('rest-saat').value = bilgi.saat || '';
+  }
+
+  function sheetIdKaydet() {
+    localStorage.setItem('sheet_id', document.getElementById('sheet-id-input').value.trim());
+    toast('✅ Sheet ID kaydedildi');
+  }
+
+  function bilgileriKaydet() {
+    localStorage.setItem('restoran_bilgi', JSON.stringify({
+      ad:    document.getElementById('rest-ad').value,
+      adres: document.getElementById('rest-adres').value,
+      tel:   document.getElementById('rest-tel').value,
+      saat:  document.getElementById('rest-saat').value,
+    }));
+    toast('✅ Bilgiler kaydedildi');
+  }
+
+  // ── TOAST ──
+  function toast(mesaj) {
+    const el = document.getElementById('toast');
+    el.textContent = mesaj;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2800);
+  }
+</script>
 </body>
 </html>
